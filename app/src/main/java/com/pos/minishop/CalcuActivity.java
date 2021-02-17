@@ -27,6 +27,7 @@ public class CalcuActivity extends AppCompatActivity {
     private boolean lastDot;
 
     SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
