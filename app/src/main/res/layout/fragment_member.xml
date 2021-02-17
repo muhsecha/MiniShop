@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.member.MemberFragment">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ti1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="150dp">
+
+        <EditText
+            android:id="@+id/et_fullName"
+            android:textColorHint="@color/purple_light"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Full Name"
+            android:background="#ffffff"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_below="@+id/ti1"
+        android:id="@+id/ti2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp">
+
+        <EditText
+            android:id="@+id/et_gender"
+            android:textColorHint="@color/purple_light"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Gender"
+            android:background="#ffffff"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_below="@+id/ti2"
+        android:id="@+id/ti3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp">
+
+        <EditText
+            android:id="@+id/et_address"
+            android:textColorHint="@color/purple_light"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Adress"
+            android:background="#ffffff"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_below="@+id/ti3"
+        android:id="@+id/ti4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp">
+
+        <EditText
+            android:id="@+id/et_datePicker"
+            android:textColorHint="@color/purple_light"
+            android:textColor="@color/black"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:drawableEnd="@drawable/ic_date_range"
+            android:drawableRight="@drawable/ic_date_range"
+            android:focusable="true"
+            android:hint="Date"
+            android:padding="12dp"
+            android:textSize="14sp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_below="@+id/ti4"
+        android:text="Submit"
+        android:background="@drawable/btn_universal"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

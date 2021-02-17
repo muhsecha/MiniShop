@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_dash">
+
+    <fragment
+        android:id="@+id/nav_dash"
+        android:name="com.pos.minishop.ui.home.HomeFragment"
+        android:label="home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_trans"
+        android:name="com.pos.minishop.ui.transaksi.TransFragment"
+        android:label="trans"
+        tools:layout="@layout/fragment_transaction" />
+
+    <fragment
+        android:id="@+id/nav_member"
+        android:name="com.pos.minishop.ui.member.MemberFragment"
+        android:label="member"
+        tools:layout="@layout/fragment_member" />
+
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="com.pos.minishop.ui.logOut.LogOutFragment"
+        android:label="logout"
+        tools:layout="@layout/fragment_logout" />
+</navigation>
