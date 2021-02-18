@@ -84,7 +84,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btn_register"
+        android:id="@+id/btn_submit"
         android:layout_below="@+id/ti4"
         android:text="Submit"
         android:background="@drawable/btn_universal"
