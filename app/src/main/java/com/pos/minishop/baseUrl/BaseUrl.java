@@ -1,5 +1,5 @@
 package com.pos.minishop.baseUrl;
 
 public class BaseUrl {
-    public static String url = "https://dc93daeafeaa.ngrok.io/api/";
+    public static String url = "http://localhost:8000/api/";
 }
