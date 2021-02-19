@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pos.minishop">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,7 +15,10 @@
         <activity android:name=".ResultActivity" />
         <activity android:name=".CalcuActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity"
+            android:theme="@style/Theme.MiniShop"
+            android:usesCleartextTraffic="true">
+        </activity>
         <activity android:name=".CategoryManagementActivity" />
         <activity android:name=".InputProductActivity" />
         <activity android:name=".ProductManagementActivity" />
@@ -23,7 +28,6 @@
             android:theme="@style/Theme.MiniShop.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

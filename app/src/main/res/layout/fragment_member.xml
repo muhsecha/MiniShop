@@ -80,8 +80,8 @@
             android:textSize="14sp"/>
 
     <Button
-        android:id="@+id/btn_register"
         android:layout_below="@+id/et_datePicker"
+        android:id="@+id/btn_submit"
         android:text="Submit"
         android:background="@drawable/btn_universal"
         android:layout_marginHorizontal="25dp"
