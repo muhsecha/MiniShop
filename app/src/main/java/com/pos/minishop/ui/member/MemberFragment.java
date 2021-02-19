@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.pos.minishop.R;
@@ -26,6 +27,7 @@ public class MemberFragment extends Fragment {
     DatePickerDialog.OnDateSetListener date;
 
     TextView datedeparture;
+    EditText etNama,etAddress,etgender;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +35,9 @@ public class MemberFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_member, container, false);
         datedeparture = root.findViewById(R.id.et_datePicker);
+        etNama = root.findViewById(R.id.et_fullName);
+        etAddress = root.findViewById(R.id.et_address);
+        etgender = root.findViewById(R.id.et_gender);
 
         myCalendar = Calendar.getInstance();
         date = new DatePickerDialog.OnDateSetListener() {
@@ -53,7 +58,7 @@ public class MemberFragment extends Fragment {
         datedeparture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(getActivity().getApplication(), date,
+                new DatePickerDialog(getActivity(), date,
                         myCalendar.get(Calendar.YEAR),
                         myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -65,6 +70,6 @@ public class MemberFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Log Out");
+        getActivity().setTitle("Member");
     }
 }
