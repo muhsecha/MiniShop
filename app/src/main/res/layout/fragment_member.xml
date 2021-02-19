@@ -59,25 +59,32 @@
             android:background="#ffffff"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <Spinner
+        android:id="@+id/spinner_member_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ti3"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="8dp"/>
 
-
-        <EditText
-            android:id="@+id/et_datePicker"
-            android:layout_below="@+id/ti3"
-            android:textColorHint="@color/purple_light"
-            android:textColor="@color/black"
-            android:layout_width="175dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            android:background="@android:color/white"
-            android:clickable="true"
-            android:drawableEnd="@drawable/ic_date_range"
-            android:drawableRight="@drawable/ic_date_range"
-            android:focusable="true"
-            android:hint="Date"
-            android:padding="12dp"
-            android:textSize="14sp"/>
+    <EditText
+        android:id="@+id/et_datePicker"
+        android:layout_below="@+id/spinner_member_category"
+        android:textColorHint="@color/purple_light"
+        android:textColor="@color/black"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:clickable="true"
+        android:drawableEnd="@drawable/ic_date_range"
+        android:drawableRight="@drawable/ic_date_range"
+        android:focusable="true"
+        android:hint="Date"
+        android:padding="12dp"
+        android:textSize="14sp"/>
 
     <Button
         android:layout_below="@+id/et_datePicker"

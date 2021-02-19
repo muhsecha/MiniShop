@@ -62,7 +62,7 @@ public class ProductManagementActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
         String token = sp.getString("logged", "missing");
 
-        AndroidNetworking.get(BaseUrl.url + "products")
+        AndroidNetworking.get(BaseUrl.url + "api/products")
                 .addHeaders("Authorization", "Bearer " + token)
                 .setPriority(Priority.LOW)
                 .build()
@@ -82,7 +82,7 @@ public class ProductManagementActivity extends AppCompatActivity {
                                     product.setName(item.getString("name"));
                                     product.setPrice(item.getString("price"));
                                     product.setStock(item.getString("stock"));
-                                    product.setImage("http://127.0.0.1:8000/storage/" + item.getString("image"));
+                                    product.setImage(BaseUrl.url + "/storage/" + item.getString("image"));
                                     listProduct.add(product);
                                 }
 

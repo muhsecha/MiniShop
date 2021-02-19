@@ -95,7 +95,7 @@ public class InputProductActivity extends AppCompatActivity {
                         file = new File(getPath(imageUri));
                     }
 
-                    AndroidNetworking.upload(BaseUrl.url + "products")
+                    AndroidNetworking.upload(BaseUrl.url + "api/products")
                             .addHeaders("Authorization", "Bearer " + token)
                             .addMultipartFile("image", file)
                             .addMultipartParameter("name", name)

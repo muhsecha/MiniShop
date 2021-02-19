@@ -46,7 +46,7 @@ public class CategoryManagementActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
         String token = sp.getString("logged", "missing");
 
-        AndroidNetworking.get(BaseUrl.url + "product-categories")
+        AndroidNetworking.get(BaseUrl.url + "api/product-categories")
                 .addHeaders("Authorization", "Bearer " + token)
                 .setPriority(Priority.LOW)
                 .build()

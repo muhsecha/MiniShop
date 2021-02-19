@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.setTitle("Logging In...");
                 progressDialog.show();
 
-                AndroidNetworking.post(BaseUrl.url + "login")
+                AndroidNetworking.post(BaseUrl.url + "api/login")
                         .addBodyParameter("email", email)
                         .addBodyParameter("password", password)
                         .setPriority(Priority.LOW)
