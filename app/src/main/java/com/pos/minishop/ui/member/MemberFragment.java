@@ -49,7 +49,7 @@ public class MemberFragment extends Fragment {
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
                 TextView tanggal = root.findViewById(R.id.et_datePicker);
-                String myFormat = "dd-MMMM-yyyy";
+                String myFormat = "yyyy-MMMM-dd";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                 tanggal.setText(sdf.format(myCalendar.getTime()));
             }

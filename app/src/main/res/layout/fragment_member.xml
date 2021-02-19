@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="150dp">
+        android:layout_marginTop="50dp">
 
         <EditText
             android:id="@+id/et_fullName"
@@ -59,20 +59,17 @@
             android:background="#ffffff"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_below="@+id/ti3"
-        android:id="@+id/ti4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="5dp">
+
 
         <EditText
             android:id="@+id/et_datePicker"
+            android:layout_below="@+id/ti3"
             android:textColorHint="@color/purple_light"
             android:textColor="@color/black"
             android:layout_width="175dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
             android:background="@android:color/white"
             android:clickable="true"
             android:drawableEnd="@drawable/ic_date_range"
@@ -81,11 +78,10 @@
             android:hint="Date"
             android:padding="12dp"
             android:textSize="14sp"/>
-    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_register"
-        android:layout_below="@+id/ti4"
+        android:layout_below="@+id/et_datePicker"
         android:text="Submit"
         android:background="@drawable/btn_universal"
         android:layout_marginHorizontal="25dp"
