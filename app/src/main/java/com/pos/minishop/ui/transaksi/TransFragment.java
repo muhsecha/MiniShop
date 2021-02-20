@@ -38,6 +38,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import io.realm.Realm;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class TransFragment extends Fragment {
@@ -57,6 +59,8 @@ public class TransFragment extends Fragment {
         rlProduct =  root.findViewById(R.id.rl_listProduct);
         tvCount = root.findViewById(R.id.tv_countItem);
         ivC = root.findViewById(R.id.iv_count);
+
+        Realm.init(root.getContext());
 
         ivC.setOnClickListener(new View.OnClickListener() {
             @Override
