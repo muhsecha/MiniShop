@@ -89,7 +89,7 @@ public class TransFragment extends Fragment {
         SharedPreferences sp = getActivity().getSharedPreferences("login", MODE_PRIVATE);
         String token = sp.getString("logged", "missing");
 
-        AndroidNetworking.get(BaseUrl.url + "products")
+        AndroidNetworking.get(BaseUrl.url + "api/products")
                 .addHeaders("Authorization", "Bearer " + token)
                 .setPriority(Priority.LOW)
                 .build()

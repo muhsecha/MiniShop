@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
                 progressDialog.setTitle("Logging In...");
                 progressDialog.show();
 
-                AndroidNetworking.post(BaseUrl.url + "register")
+                AndroidNetworking.post(BaseUrl.url + "api/register")
                         .addBodyParameter("name", name)
                         .addBodyParameter("email", email)
                         .addBodyParameter("business_name", business)
