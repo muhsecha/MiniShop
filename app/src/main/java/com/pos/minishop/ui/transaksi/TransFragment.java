@@ -1,5 +1,6 @@
 package com.pos.minishop.ui.transaksi;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -48,19 +49,21 @@ public class TransFragment extends Fragment {
     RecyclerView rvTrans;
     RelativeLayout rlProduct;
     private ArrayList<CartModel> listCart = new ArrayList<>();
-    CartAdapter cartAdapters;
+    private CartAdapter adapter;
     TextView tvCount;
     ImageView ivC;
+    TransFragment context;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_transaction, container, false);
         rvTrans = root.findViewById(R.id.rv_cart);
-        rlProduct =  root.findViewById(R.id.rl_listProduct);
         tvCount = root.findViewById(R.id.tv_countItem);
         ivC = root.findViewById(R.id.iv_count);
 
-        Realm.init(root.getContext());
+        context = this;
+
+        tvCount.setText("" + count);
 
         ivC.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,8 +84,16 @@ public class TransFragment extends Fragment {
 
     public void showProducts() {
         rvTrans.setLayoutManager(new LinearLayoutManager(getContext()));
-        CartAdapter cartAdapter = new CartAdapter(listCart);
-        rvTrans.setAdapter(cartAdapter);
+        adapter = new CartAdapter(getActivity(), listCart);
+        rvTrans.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new CartAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                count++;
+                tvCount.setText("" + count);
+            }
+        });
     }
 
     public void getProducts() {

@@ -59,7 +59,6 @@ public class MemberFragment extends Fragment implements AdapterView.OnItemSelect
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_member, container, false);
-        datedeparture = root.findViewById(R.id.et_datePicker);
         btnSubmit = root.findViewById(R.id.btn_submit);
         etFullName = root.findViewById(R.id.et_fullName);
         etGender = root.findViewById(R.id.et_gender);
