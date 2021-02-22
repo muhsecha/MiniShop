@@ -16,9 +16,12 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -28,19 +31,29 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
 import com.bumptech.glide.Glide;
 import com.pos.minishop.baseUrl.BaseUrl;
+import com.pos.minishop.model.MemberCategoryModel;
+import com.pos.minishop.model.ProductCategoryModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 
-public class InputProductActivity extends AppCompatActivity {
+import static java.security.AccessController.getContext;
+
+public class InputProductActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private ImageView ivProduct;
     private EditText etName, etPrice, etDesc, etStock;
     private Button btnSubmit;
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int STORAGE_PERMISSION_CODE = 123;
     private Uri imageUri;
+
+    private ArrayList<ProductCategoryModel> listProductCategory = new ArrayList<>();
+    private Spinner spinnerProductCategory;
+    private String idProductCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +162,13 @@ public class InputProductActivity extends AppCompatActivity {
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
+//    public void showProductCategory() {
+//        ArrayAdapter<ProductCategoryModel> adapter = new ArrayAdapter<>(android.R.layout.simple_spinner_item, listProductCategory);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnerProductCategory.setAdapter(adapter);
+//        spinnerProductCategory.setOnItemSelectedListener(this);
+//    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -205,5 +225,59 @@ public class InputProductActivity extends AppCompatActivity {
                 Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        ProductCategoryModel productCategory = (ProductCategoryModel) parent.getSelectedItem();
+        idProductCategory = productCategory.getId();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+    public void getMemberCategories() {
+        SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
+        String token = sp.getString("logged", "missing");
+
+        AndroidNetworking.get(BaseUrl.url + "api/product-categories")
+                .addHeaders("Authorization", "Bearer " + token)
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String status = response.getString("status");
+
+                            if (status.equals("success")) {
+                                JSONArray data = response.getJSONArray("data");
+
+                                for (int i = 0; i < data.length(); i++) {
+                                    JSONObject item = data.getJSONObject(i);
+
+                                    ProductCategoryModel productCategory = new ProductCategoryModel();
+                                    productCategory.setId(item.getString("id"));
+                                    productCategory.setNamaCategory(item.getString("name"));
+                                    listProductCategory.add(productCategory);
+                                }
+
+//                                showProductCategory();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.d("TAG", "onError: " + anError.getErrorDetail());
+                        Log.d("TAG", "onError: " + anError.getErrorBody());
+                        Log.d("TAG", "onError: " + anError.getErrorCode());
+                        Log.d("TAG", "onError: " + anError.getResponse());
+                    }
+                });
     }
 }

@@ -1,6 +1,5 @@
 package com.pos.minishop.ui.transaksi;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,16 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,13 +20,11 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.pos.minishop.CalcuActivity;
+import com.pos.minishop.CartActivity;
 import com.pos.minishop.R;
-import com.pos.minishop.adapter.CartAdapter;
-import com.pos.minishop.adapter.ProductAdapter;
+import com.pos.minishop.adapter.TransAdapter;
 import com.pos.minishop.baseUrl.BaseUrl;
-import com.pos.minishop.model.CartModel;
-import com.pos.minishop.model.ProductModel;
+import com.pos.minishop.model.TransModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,17 +32,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import io.realm.Realm;
-
 import static android.content.Context.MODE_PRIVATE;
 
 public class TransFragment extends Fragment {
 
     int count;
     RecyclerView rvTrans;
-    RelativeLayout rlProduct;
-    private ArrayList<CartModel> listCart = new ArrayList<>();
-    private CartAdapter adapter;
+    private ArrayList<TransModel> listCart = new ArrayList<>();
+    private TransAdapter adapter;
     TextView tvCount;
     ImageView ivC;
     TransFragment context;
@@ -63,12 +53,10 @@ public class TransFragment extends Fragment {
 
         context = this;
 
-        tvCount.setText("" + count);
-
         ivC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), CalcuActivity.class));
+                startActivity(new Intent(getActivity(), CartActivity.class));
             }
         });
 
@@ -84,10 +72,10 @@ public class TransFragment extends Fragment {
 
     public void showProducts() {
         rvTrans.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new CartAdapter(getActivity(), listCart);
+        adapter = new TransAdapter(getActivity(), listCart);
         rvTrans.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new CartAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new TransAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 count++;
@@ -116,12 +104,12 @@ public class TransFragment extends Fragment {
                                 for (int i = 0; i < data.length(); i++) {
                                     JSONObject item = data.getJSONObject(i);
 
-                                    CartModel cartModel = new CartModel();
-                                    cartModel.setNameProduct(item.getString("name"));
-                                    cartModel.setPrice(item.getString("price"));
-                                    cartModel.setStock(item.getString("stock"));
-                                    cartModel.setCartImage("http://127.0.0.1:8000/storage/" + item.getString("image"));
-                                    listCart.add(cartModel);
+                                    TransModel transModel = new TransModel();
+                                    transModel.setNameProduct(item.getString("name"));
+                                    transModel.setPrice("Rp. " + item.getString("price"));
+                                    transModel.setStock(item.getString("stock"));
+                                    transModel.setCartImage("http://127.0.0.1:8000/storage/" + item.getString("image"));
+                                    listCart.add(transModel);
                                 }
 
                                 showProducts();

@@ -8,7 +8,7 @@
         android:id="@+id/rl_sales_transaction"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="65dp">
 
         <ImageView
             android:id="@+id/iv_sales_transaction"
@@ -16,12 +16,12 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="25dp"
             android:layout_width="60dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="60dp"/>
         <TextView
             android:id="@+id/tv_nameProduct_transaction"
             android:layout_toRightOf="@+id/iv_sales_transaction"
             android:text="Bakso"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="13dp"
             android:textColor="@color/black"
             android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
-            android:id="@+id/btn_countTransaction"
+            android:id="@+id/tv_countTransaction"
             android:text="1"
             android:visibility="gone"
             android:padding="8dp"
@@ -64,6 +64,13 @@
             android:background="@drawable/bg_count_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
+        <View
+            android:layout_below="@id/iv_sales_transaction"
+            android:background="#BDBDBD"
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
     </RelativeLayout>
 
 </RelativeLayout>

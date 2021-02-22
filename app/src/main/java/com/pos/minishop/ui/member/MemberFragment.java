@@ -47,7 +47,6 @@ import static android.content.Context.MODE_PRIVATE;
 public class MemberFragment extends Fragment implements AdapterView.OnItemSelectedListener{
     Calendar myCalendar;
     DatePickerDialog.OnDateSetListener date;
-    TextView datedeparture;
     private Button btnSubmit;
     private EditText etFullName, etGender, etAddress, etDate;
     private Spinner spinnerMemberCategory;
@@ -83,7 +82,7 @@ public class MemberFragment extends Fragment implements AdapterView.OnItemSelect
             }
         };
 
-        datedeparture.setOnClickListener(new View.OnClickListener() {
+        etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(getActivity(), date,

@@ -80,7 +80,7 @@ public class ProductManagementActivity extends AppCompatActivity {
 
                                     ProductModel product = new ProductModel();
                                     product.setName(item.getString("name"));
-                                    product.setPrice(item.getString("price"));
+                                    product.setPrice("Rp. "+item.getString("price"));
                                     product.setStock(item.getString("stock"));
                                     product.setImage(BaseUrl.url + "/storage/" + item.getString("image"));
                                     listProduct.add(product);

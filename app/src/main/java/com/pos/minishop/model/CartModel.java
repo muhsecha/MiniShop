@@ -1,38 +1,29 @@
 package com.pos.minishop.model;
 
 public class CartModel {
+    String cartname,cartstock,cartprice;
 
-    private String cartImage,nameProduct,stock,price;
-
-    public String getCartImage() {
-        return cartImage;
+    public String getCartname() {
+        return cartname;
     }
 
-    public void setCartImage(String cartImage) {
-        this.cartImage = cartImage;
+    public void setCartname(String cartname) {
+        this.cartname = cartname;
     }
 
-    public String getNameProduct() {
-        return nameProduct;
+    public String getCartstock() {
+        return cartstock;
     }
 
-    public void setNameProduct(String nameProduct) {
-        this.nameProduct = nameProduct;
+    public void setCartstock(String cartstock) {
+        this.cartstock = cartstock;
     }
 
-    public String getStock() {
-        return stock;
+    public String getCartprice() {
+        return cartprice;
     }
 
-    public void setStock(String stock) {
-        this.stock = stock;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
+    public void setCartprice(String cartprice) {
+        this.cartprice = cartprice;
     }
 }

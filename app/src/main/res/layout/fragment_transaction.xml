@@ -13,7 +13,6 @@
         android:layout_height="550dp">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_cart"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/list_sales_transaction"/>
