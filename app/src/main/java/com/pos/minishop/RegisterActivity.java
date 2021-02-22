@@ -25,7 +25,6 @@ import org.json.JSONObject;
 public class RegisterActivity extends AppCompatActivity {
     EditText etName,etEmail,etBusiness,etPass;
     Button btnReg;
-    SharedPreferences sp;
     ProgressDialog progressDialog;
 
     @Override

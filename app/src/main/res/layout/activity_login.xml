@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
     android:orientation="vertical"
-    android:background="#F3E5F5">
+    android:background="#ffffff">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -16,12 +16,11 @@
 
         <EditText
             android:id="@+id/et_Email_Login"
-            android:textColorHint="@color/white"
             android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username"
-            android:background="#F3E5F5"/>
+            android:background="#ffffff"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -32,13 +31,12 @@
 
         <EditText
             android:id="@+id/et_Password_Login"
-            android:textColorHint="@color/white"
             android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
             android:inputType="textPassword"
-            android:background="#F3E5F5"
+            android:background="#fff"
             android:elevation="5dp"/>
     </com.google.android.material.textfield.TextInputLayout>
 

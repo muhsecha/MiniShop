@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
     android:orientation="vertical"
-    android:background="#F3E5F5">
+    android:background="#fff">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username"
-            android:background="#F3E5F5"/>
+            android:background="#fff"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
-            android:background="#F3E5F5"/>
+            android:background="#fff"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Business Name"
-            android:background="#F3E5F5"/>
+            android:background="#fff"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:hint="Password"
             android:inputType="textPassword"
-            android:background="#F3E5F5"/>
+            android:background="#fff"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
