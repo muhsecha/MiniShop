@@ -38,6 +38,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class TransFragment extends Fragment implements Serializable {
 
     int count;
+    Boolean exist = false;
     RecyclerView rvTrans;
     private ArrayList<TransModel> listCart = new ArrayList<>();
     private ArrayList<TransModel> productArray;
@@ -62,21 +63,25 @@ public class TransFragment extends Fragment implements Serializable {
             @Override
             public void onClick(View view) {
                 ArrayList<TransModel> productArray = new ArrayList<>();
+
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
                         for (int i = 0; i < listCart.size(); i++) {
                             if (listCart.get(i).getAmount() > 0) {
                                 productArray.add(listCart.get(i));
+                                exist = true;
                             }
                         }
                     }
                 };
                 runnable.run();
-                Intent intent = new Intent(getActivity(), CartActivity.class);
-                intent.putExtra("productArray", productArray);
-                Log.d("productArray", productArray.toString());
-                startActivityForResult(intent, PRODUCT_REQUEST);
+                if(exist) {
+                    Intent intent = new Intent(getActivity(), CartActivity.class);
+                    intent.putExtra("productArray", productArray);
+                    Log.d("productArray", productArray.toString());
+                    startActivityForResult(intent, PRODUCT_REQUEST);
+                }
             }
         });
 

@@ -2,6 +2,7 @@ package com.pos.minishop.adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,12 +89,18 @@ public class TransAdapter extends RecyclerView.Adapter<TransAdapter.TransViewHol
                         int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION){
                             listener.onItemClick(position);
-                            if(tvcount.getVisibility() != View.VISIBLE) {
-                                tvcount.setVisibility(View.VISIBLE);
+                            String stockNow = listTrans.get(position).getStock();
+                            if(Integer.parseInt(stockNow) > 0) {
+                                if(tvcount.getVisibility() != View.VISIBLE) {
+                                    tvcount.setVisibility(View.VISIBLE);
+                                }
+                                counter++;
+                                listTrans.get(position).setAmount(counter);
+                                listTrans.get(position).setStock(String.valueOf(Integer.parseInt(stockNow)-1));
+                                stockNow = listTrans.get(position).getStock();
+                                tvcount.setText("" + counter);
+                                tvStock.setText(stockNow);
                             }
-                            counter++;
-                            listTrans.get(position).setAmount(counter);
-                            tvcount.setText("" + counter);
                         }
                     }
                 }
