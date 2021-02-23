@@ -7,6 +7,16 @@ public class TransModel implements Serializable {
     private String cartImage,nameProduct,stock,price;
     private int amount;
 
+    public int getPriceInt() {
+        return priceInt;
+    }
+
+    public void setPriceInt(int priceInt) {
+        this.priceInt = priceInt;
+    }
+
+    private int priceInt;
+
     public String getCartImage() {
         return cartImage;
     }

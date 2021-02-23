@@ -121,13 +121,12 @@ public class TransFragment extends Fragment implements Serializable {
 
                             if (status.equals("success")) {
                                 JSONArray data = response.getJSONArray("data");
-
                                 for (int i = 0; i < data.length(); i++) {
                                     JSONObject item = data.getJSONObject(i);
-
                                     TransModel transModel = new TransModel();
                                     transModel.setNameProduct(item.getString("name"));
                                     transModel.setPrice("Rp. " + item.getString("price"));
+                                    transModel.setPriceInt(item.getInt("price"));
                                     transModel.setStock(item.getString("stock"));
                                     transModel.setCartImage("https://afternoon-ocean-46596.herokuapp.com/storage/" + item.getString("image"));
                                     listCart.add(transModel);

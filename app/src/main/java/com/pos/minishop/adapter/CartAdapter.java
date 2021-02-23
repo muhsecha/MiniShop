@@ -69,9 +69,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     public static class CartViewHolder extends RecyclerView.ViewHolder {
-        int counter;
         ImageView ivCart;
-        TextView tvProduct,tvStock,tvprice,tvcount;
+        TextView tvProduct,tvStock,tvprice;
         RelativeLayout relativeLayout;
         public CartViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -88,11 +87,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                         int position = getAdapterPosition();
                         if(position != RecyclerView.NO_POSITION){
                             listener.onItemClick(position);
-                            tvcount.setVisibility(View.VISIBLE);
-                            counter++;
-                            Log.d("TAG", "onClick: " + counter);
-                            listTrans.get(position).setAmount(counter);
-                            tvcount.setText("" + counter);
                         }
                     }
                 }
