@@ -103,7 +103,6 @@ public class ProductManagementActivity extends AppCompatActivity {
                         }
                     }
 
-
                     @Override
                     public void onError(ANError anError) {
                         Log.d("TAG", "onError: " + anError.getErrorDetail());

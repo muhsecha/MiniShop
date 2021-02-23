@@ -13,6 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MiniShop">
+        <activity android:name=".EditDiscountActivity"></activity>
+        <activity android:name=".CreateDiscountActivity" />
         <activity android:name=".EditProductActivity" />
         <activity android:name=".EditCategoryActivity" />
         <activity android:name=".ChargeActivity" />

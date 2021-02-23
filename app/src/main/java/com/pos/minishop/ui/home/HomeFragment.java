@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.pos.minishop.CategoryManagementActivity;
+import com.pos.minishop.DiscountManagementActivity;
 import com.pos.minishop.ProductManagementActivity;
 import com.pos.minishop.R;
 
@@ -44,7 +45,7 @@ public class HomeFragment extends Fragment {
         lnD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Discount", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), DiscountManagementActivity.class));
             }
         });
 
