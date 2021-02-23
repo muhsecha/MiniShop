@@ -43,53 +43,73 @@ public class CategoryManagementActivity extends AppCompatActivity {
         rvCategory = findViewById(R.id.rv_category);
         rvCategory.setHasFixedSize(true);
 
+        getCategories();
 
         btnplus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("masuk", "onClick: ");
-                String category = etInput.getText().toString();
-                AndroidNetworking.post(BaseUrl.url + "api/product-categories")
-                        .addBodyParameter("name",category)
-                        .setPriority(Priority.LOW)
-                        .build()
-                        .getAsJSONObject(new JSONObjectRequestListener() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    String status = response.getString("status");
+                String name = etInput.getText().toString().trim();
 
-                                    if (status.equals("success")) {
-                                        JSONObject data = response.getJSONObject("data");
+                boolean isEmpty = false;
 
-                                        SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
-                                        sp.edit().putString("logged", data.getString("api_token")).apply();
-                                        Toast.makeText(CategoryManagementActivity.this, "Success Add Category", Toast.LENGTH_SHORT).show();
-                                    }else {
-                                        Toast.makeText(getApplicationContext(), "gagal", Toast.LENGTH_SHORT).show();
-//                                        progressDialog.dismiss();
+                if (name.isEmpty()) {
+                    isEmpty = true;
+                    etInput.setError("Required");
+                }
+
+                if (!isEmpty) {
+                    SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
+                    String token = sp.getString("logged", "missing");
+
+                    AndroidNetworking.post(BaseUrl.url + "api/product-categories")
+                            .addHeaders("Authorization", "Bearer " + token)
+                            .addBodyParameter("name", name)
+                            .setPriority(Priority.LOW)
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        String status = response.getString("status");
+                                        String message = response.getString("message");
+
+                                        if (status.equals("success")) {
+                                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                                            getCategories();
+                                            etInput.setText("");
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
                                 }
-                            }
 
-                            @Override
-                            public void onError(ANError anError) {
-                                Log.d("TAG", "onError: " + anError.getErrorDetail());
-                                Log.d("TAG", "onError: " + anError.getErrorBody());
-                                Log.d("TAG", "onError: " + anError.getErrorCode());
-                                Log.d("TAG", "onError: " + anError.getResponse());
-                            }
-                        });
+                                @Override
+                                public void onError(ANError anError) {
+                                    Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
+                                    Log.d("TAG", "onError: " + anError.getErrorDetail());
+                                    Log.d("TAG", "onError: " + anError.getErrorBody());
+                                    Log.d("TAG", "onError: " + anError.getErrorCode());
+                                    Log.d("TAG", "onError: " + anError.getResponse());
+                                }
+                            });
+                }
             }
         });
 
     }
     public void showCategories() {
         rvCategory.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        CategoryAdapter categoryAdapter = new CategoryAdapter(listCategory);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(listCategory, CategoryManagementActivity.this);
         rvCategory.setAdapter(categoryAdapter);
+
+        categoryAdapter.setOnItemClickCallback(new CategoryAdapter.OnItemClickCallback() {
+            @Override
+            public void onItemClicked(CategoryModel data) {
+                Intent intent = new Intent(getApplicationContext(), EditCategoryActivity.class);
+                intent.putExtra("Item Data", data);
+                startActivity(intent);
+            }
+        });
     }
 
     public void getCategories() {
@@ -107,12 +127,14 @@ public class CategoryManagementActivity extends AppCompatActivity {
                             String status = response.getString("status");
 
                             if (status.equals("success")) {
+                                listCategory.clear();
                                 JSONArray data = response.getJSONArray("data");
 
                                 for (int i = 0; i < data.length(); i++) {
                                     JSONObject item = data.getJSONObject(i);
 
                                     CategoryModel category = new CategoryModel();
+                                    category.setId(item.getString("id"));
                                     category.setName(item.getString("name"));
                                     listCategory.add(category);
                                 }
