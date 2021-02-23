@@ -63,4 +63,9 @@ public class DiscountModel implements Parcelable {
         dest.writeString(name);
         dest.writeString(discount);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -38,6 +38,25 @@
         android:textColor="@color/black"
         android:text="TOTAL : "
         android:textStyle="bold"/>
+
+    <Spinner
+        android:id="@+id/spinner_discounts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/spinner_members"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="8dp"/>
+
+    <Spinner
+        android:id="@+id/spinner_members"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_total"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="8dp"/>
+
     <TextView
         android:layout_toRightOf="@+id/tv1"
         android:id="@+id/tv_total"

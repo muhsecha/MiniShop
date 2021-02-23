@@ -228,7 +228,7 @@ public class InputProductActivity extends AppCompatActivity implements AdapterVi
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         ProductCategoryModel productCategory = (ProductCategoryModel) parent.getSelectedItem();
-        if (productCategory.equals("Choose Category")) {
+        if (productCategory.equals("Choose category")) {
             idProductCategory = null;
         } else {
             idProductCategory = productCategory.getId();
@@ -258,7 +258,7 @@ public class InputProductActivity extends AppCompatActivity implements AdapterVi
                                 JSONArray data = response.getJSONArray("data");
 
                                 ProductCategoryModel product = new ProductCategoryModel();
-                                product.setNamaCategory("Choose Category");
+                                product.setNamaCategory("Choose category");
                                 listProductCategory.add(product);
 
                                 for (int i = 0; i < data.length(); i++) {
