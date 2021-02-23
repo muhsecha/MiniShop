@@ -79,7 +79,9 @@ public class ChargeActivity extends AppCompatActivity {
                 for (int i = 0;i < productArray.size(); ++i){
                     transactionArrayData.put("product_id", Integer.parseInt(productArray.get(i).getProductId()));
                     transactionArrayData.put("quantity", productArray.get(i).getAmount());
-                    transactionArrayData.put("total", productArray.get(i).getPrice());
+                    transactionArrayData.put("total", 10000);
+                    transactionArrayData.put("member_id", 1);
+                    transactionArrayData.put("discount", 0);
                     transactionArray.put(i, transactionArrayData);
                 }
                 transaction.put("user_id", user_id);
@@ -92,7 +94,7 @@ public class ChargeActivity extends AppCompatActivity {
                         .addBodyParameter("user_id", transaction.getString("user_id"))
                         .addBodyParameter("member_id", idMember)
                         .addBodyParameter("discount_id", idDiscount)
-                        .addJSONArrayBody(transaction.getJSONArray("transaction"))
+                        .addJSONObjectBody(transaction)
                         .setPriority(Priority.LOW)
                         .build()
                         .getAsJSONObject(new JSONObjectRequestListener() {
