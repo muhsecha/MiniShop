@@ -31,7 +31,9 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
 import com.bumptech.glide.Glide;
 import com.pos.minishop.baseUrl.BaseUrl;
+import com.pos.minishop.model.CategoryModel;
 import com.pos.minishop.model.ProductCategoryModel;
+import com.pos.minishop.model.ProductModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,21 +42,21 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 
-public class InputProductActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class EditProductActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private ImageView ivProduct;
     private EditText etName, etPrice, etDesc, etStock;
     private Button btnSubmit;
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int STORAGE_PERMISSION_CODE = 123;
     private Uri imageUri;
-    private ArrayList<ProductCategoryModel> listProductCategory = new ArrayList<>();
     private Spinner spinnerProductCategory;
+    private ArrayList<ProductCategoryModel> listProductCategory = new ArrayList<>();
     private String idProductCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_input_product);
+        setContentView(R.layout.activity_edit_product);
 
         ivProduct = findViewById(R.id.iv_imgProduct_input);
         etName = findViewById(R.id.et_name_input);
@@ -66,6 +68,21 @@ public class InputProductActivity extends AppCompatActivity implements AdapterVi
 
         requestStoragePermission();
         getProductCategories();
+
+        Intent intent = getIntent();
+        ProductModel product = intent.getParcelableExtra("Item Data");
+
+        if (product.getImage() != null) {
+            Glide.with(this)
+                    .load(product.getImage())
+                    .into(ivProduct);
+        }
+
+        etName.setText(product.getName());
+        etPrice.setText(product.getPrice());
+        etDesc.setText(product.getDesc());
+        etStock.setText(product.getStock());
+        idProductCategory = product.getProductCategoryId();
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,14 +123,13 @@ public class InputProductActivity extends AppCompatActivity implements AdapterVi
                         file = new File(getPath(imageUri));
                     }
 
-                    AndroidNetworking.upload(BaseUrl.url + "api/products")
+                    AndroidNetworking.put(BaseUrl.url + "api/products/" + product.getId())
                             .addHeaders("Authorization", "Bearer " + token)
-                            .addMultipartFile("image", file)
-                            .addMultipartParameter("name", name)
-                            .addMultipartParameter("price", price)
-                            .addMultipartParameter("stock", stock)
-                            .addMultipartParameter("desc", desc)
-                            .addMultipartParameter("product_category_id", idProductCategory != null ? idProductCategory : "")
+                            .addBodyParameter("name", name)
+                            .addBodyParameter("price", price)
+                            .addBodyParameter("stock", stock)
+                            .addBodyParameter("desc", desc)
+                            .addBodyParameter("product_category_id", idProductCategory != null ? idProductCategory : "")
                             .setPriority(Priority.HIGH)
                             .build()
                             .setUploadProgressListener(new UploadProgressListener() {
@@ -152,19 +168,11 @@ public class InputProductActivity extends AppCompatActivity implements AdapterVi
         });
     }
 
-
     public void openFileChooser(View view) {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
-    }
-
-    public void showProductCategory() {
-        ArrayAdapter<ProductCategoryModel> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listProductCategory);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerProductCategory.setAdapter(adapter);
-        spinnerProductCategory.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -225,21 +233,6 @@ public class InputProductActivity extends AppCompatActivity implements AdapterVi
         }
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        ProductCategoryModel productCategory = (ProductCategoryModel) parent.getSelectedItem();
-        if (productCategory.equals("Choose Category")) {
-            idProductCategory = null;
-        } else {
-            idProductCategory = productCategory.getId();
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-
     public void getProductCategories() {
         SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
         String token = sp.getString("logged", "missing");
@@ -258,6 +251,7 @@ public class InputProductActivity extends AppCompatActivity implements AdapterVi
                                 JSONArray data = response.getJSONArray("data");
 
                                 ProductCategoryModel product = new ProductCategoryModel();
+                                product.setId("-1");
                                 product.setNamaCategory("Choose Category");
                                 listProductCategory.add(product);
 
@@ -271,6 +265,14 @@ public class InputProductActivity extends AppCompatActivity implements AdapterVi
                                 }
 
                                 showProductCategory();
+                                if (idProductCategory != null) {
+                                    for(int i = 0; i < listProductCategory.size(); i++) {
+                                        String id = listProductCategory.get(i).getId();
+                                        if(id.equals(idProductCategory)) {
+                                            spinnerProductCategory.setSelection(i);
+                                        }
+                                    }
+                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -285,5 +287,27 @@ public class InputProductActivity extends AppCompatActivity implements AdapterVi
                         Log.d("TAG", "onError: " + anError.getResponse());
                     }
                 });
+    }
+
+    public void showProductCategory() {
+        ArrayAdapter<ProductCategoryModel> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listProductCategory);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerProductCategory.setAdapter(adapter);
+        spinnerProductCategory.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        ProductCategoryModel productCategory = (ProductCategoryModel) parent.getSelectedItem();
+        if (productCategory.equals("Choose Category")) {
+            idProductCategory = null;
+        } else {
+            idProductCategory = productCategory.getId();
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

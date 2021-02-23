@@ -18,4 +18,9 @@ public class ProductCategoryModel {
     public void setNamaCategory(String namaCategory) {
         this.namaCategory = namaCategory;
     }
+
+    @Override
+    public String toString() {
+        return namaCategory;
+    }
 }

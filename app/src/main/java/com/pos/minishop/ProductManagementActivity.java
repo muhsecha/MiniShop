@@ -27,11 +27,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class ProductManagementActivity extends AppCompatActivity {
-
     private RecyclerView rvProduct;
     private ArrayList<ProductModel> listProduct = new ArrayList<>();
     private Button btnAddProduct;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +54,15 @@ public class ProductManagementActivity extends AppCompatActivity {
         rvProduct.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         ProductAdapter productAdapter = new ProductAdapter(listProduct);
         rvProduct.setAdapter(productAdapter);
+
+        productAdapter.setOnItemClickCallback(new ProductAdapter.OnItemClickCallback() {
+            @Override
+            public void onItemClicked(ProductModel data) {
+                Intent intent = new Intent(getApplicationContext(), EditProductActivity.class);
+                intent.putExtra("Item Data", data);
+                startActivity(intent);
+            }
+        });
     }
 
     public void getProducts() {
@@ -79,9 +86,12 @@ public class ProductManagementActivity extends AppCompatActivity {
                                     JSONObject item = data.getJSONObject(i);
 
                                     ProductModel product = new ProductModel();
+                                    product.setId(item.getString("id"));
+                                    product.setProductCategoryId(item.getString("product_category_id"));
                                     product.setName(item.getString("name"));
-                                    product.setPrice("Rp. "+item.getString("price"));
+                                    product.setPrice(item.getString("price"));
                                     product.setStock(item.getString("stock"));
+                                    product.setDesc(item.getString("desc"));
                                     product.setImage(BaseUrl.url + "/storage/" + item.getString("image"));
                                     listProduct.add(product);
                                 }
