@@ -131,6 +131,7 @@ public class CartActivity extends AppCompatActivity {
                                     DiscountModel discount = new DiscountModel();
                                     discount.setId(item.getString("id"));
                                     discount.setName(item.getString("name"));
+                                    discount.setDiscount(item.getString("discount"));
                                     listDiscount.add(discount);
                                 }
 
@@ -162,6 +163,8 @@ public class CartActivity extends AppCompatActivity {
 
                 if (!discount.getName().equals("Choose discount")) {
                     idDiscount = discount.getId();
+                    finalPrice = finalPrice - Math.round((Float.parseFloat(discount.getDiscount()) / 100) * finalPrice);
+                    tvFinalPrice.setText("TOTAL : " + String.valueOf(finalPrice));
                 }
             }
 
