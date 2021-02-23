@@ -251,7 +251,6 @@ public class EditProductActivity extends AppCompatActivity implements AdapterVie
                                 JSONArray data = response.getJSONArray("data");
 
                                 ProductCategoryModel product = new ProductCategoryModel();
-                                product.setId("-1");
                                 product.setNamaCategory("Choose Category");
                                 listProductCategory.add(product);
 
@@ -266,7 +265,7 @@ public class EditProductActivity extends AppCompatActivity implements AdapterVie
 
                                 showProductCategory();
                                 if (idProductCategory != null) {
-                                    for(int i = 0; i < listProductCategory.size(); i++) {
+                                    for(int i = 1; i < listProductCategory.size(); i++) {
                                         String id = listProductCategory.get(i).getId();
                                         if(id.equals(idProductCategory)) {
                                             spinnerProductCategory.setSelection(i);
