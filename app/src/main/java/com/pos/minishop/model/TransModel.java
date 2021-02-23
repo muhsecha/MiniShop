@@ -4,8 +4,21 @@ import java.io.Serializable;
 
 public class TransModel implements Serializable {
 
-    private String cartImage,nameProduct,stock,price;
+    private String cartImage;
+    private String nameProduct;
+    private String stock;
+    private String price;
+    private String productId;
     private int amount;
+    private int priceInt;
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
 
     public int getPriceInt() {
         return priceInt;
@@ -14,8 +27,6 @@ public class TransModel implements Serializable {
     public void setPriceInt(int priceInt) {
         this.priceInt = priceInt;
     }
-
-    private int priceInt;
 
     public String getCartImage() {
         return cartImage;

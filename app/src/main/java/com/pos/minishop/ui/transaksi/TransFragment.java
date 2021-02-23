@@ -124,6 +124,7 @@ public class TransFragment extends Fragment implements Serializable {
                                 for (int i = 0; i < data.length(); i++) {
                                     JSONObject item = data.getJSONObject(i);
                                     TransModel transModel = new TransModel();
+                                    transModel.setProductId(item.getString("id"));
                                     transModel.setNameProduct(item.getString("name"));
                                     transModel.setPrice("Rp. " + item.getString("price"));
                                     transModel.setPriceInt(item.getInt("price"));
@@ -154,7 +155,6 @@ public class TransFragment extends Fragment implements Serializable {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == PRODUCT_RESULT) {
-            Log.d("pesanan", "result");
 //            String total = data.getStringExtra("total");
 //            String nama = data.getStringExtra("nama");
             productArray = new ArrayList<>();

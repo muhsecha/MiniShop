@@ -25,7 +25,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btn_inputProduct"
+        android:id="@+id/btn_submit_charge"
         android:layout_below="@+id/ti4"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="70dp"

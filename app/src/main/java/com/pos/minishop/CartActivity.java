@@ -45,7 +45,7 @@ public class CartActivity extends AppCompatActivity {
     private ArrayList<DiscountModel> listDiscount = new ArrayList<>();
     private ArrayList<MemberModel> listMember = new ArrayList<>();
     private Spinner spinnerDiscounts, spinnerMembers;
-    private String idDiscount, idMember;
+    private String idDiscount = null, idMember = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +74,8 @@ public class CartActivity extends AppCompatActivity {
                 Intent intent = new Intent(CartActivity.this, ChargeActivity.class);
                 intent.putExtra("productArray", productArray);
                 intent.putExtra("finalPrice", finalPrice);
+                intent.putExtra("member_id", idMember);
+                intent.putExtra("discount_id", idDiscount);
                 startActivity(intent);
             }
         });

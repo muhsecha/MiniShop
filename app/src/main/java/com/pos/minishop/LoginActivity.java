@@ -85,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                         SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
                                         sp.edit().putString("logged", data.getString("api_token")).apply();
+                                        sp.edit().putString("user_id", data.getString("id")).apply();
 
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);
