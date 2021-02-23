@@ -7,16 +7,46 @@
     tools:context=".CartActivity">
 
     <ScrollView
+        android:id="@+id/sv_cart"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="550dp">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_cart"
-            android:layout_marginTop="20dp"
+        android:layout_height="600dp">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/list_cart"/>
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_list_cart"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                android:background="@color/white"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                tools:listitem="@layout/list_cart"
+                android:layout_marginHorizontal="5dp">
+            </androidx.recyclerview.widget.RecyclerView>
+        </RelativeLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_above="@+id/btn_submitCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="25dp"
+        android:textColor="@color/black"
+        android:text="TOTAL : "
+        android:textStyle="bold"/>
+    <TextView
+        android:layout_toRightOf="@+id/tv1"
+        android:id="@+id/tv_total"
+        android:layout_above="@+id/btn_submitCart"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rp. "
+        android:textColor="@color/purple_dark"/>
 
     <Button
         android:id="@+id/btn_submitCart"

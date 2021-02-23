@@ -30,19 +30,24 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class TransFragment extends Fragment {
+public class TransFragment extends Fragment implements Serializable {
 
     int count;
     RecyclerView rvTrans;
     private ArrayList<TransModel> listCart = new ArrayList<>();
+    private ArrayList<TransModel> productArray;
     private TransAdapter adapter;
     TextView tvCount;
     ImageView ivC;
     TransFragment context;
+    final static int PRODUCT_REQUEST = 100;
+    final static int PRODUCT_RESULT = 101;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +61,22 @@ public class TransFragment extends Fragment {
         ivC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), CartActivity.class));
+                ArrayList<TransModel> productArray = new ArrayList<>();
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < listCart.size(); i++) {
+                            if (listCart.get(i).getAmount() > 0) {
+                                productArray.add(listCart.get(i));
+                            }
+                        }
+                    }
+                };
+                runnable.run();
+                Intent intent = new Intent(getActivity(), CartActivity.class);
+                intent.putExtra("productArray", productArray);
+                Log.d("productArray", productArray.toString());
+                startActivityForResult(intent, PRODUCT_REQUEST);
             }
         });
 
@@ -64,6 +84,7 @@ public class TransFragment extends Fragment {
 
         return root;
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -108,7 +129,7 @@ public class TransFragment extends Fragment {
                                     transModel.setNameProduct(item.getString("name"));
                                     transModel.setPrice("Rp. " + item.getString("price"));
                                     transModel.setStock(item.getString("stock"));
-                                    transModel.setCartImage("http://127.0.0.1:8000/storage/" + item.getString("image"));
+                                    transModel.setCartImage("https://afternoon-ocean-46596.herokuapp.com/storage/" + item.getString("image"));
                                     listCart.add(transModel);
                                 }
 
@@ -128,5 +149,33 @@ public class TransFragment extends Fragment {
                         Log.d("TAG", "onError: " + anError.getResponse());
                     }
                 });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == PRODUCT_RESULT) {
+            Log.d("pesanan", "result");
+//            String total = data.getStringExtra("total");
+//            String nama = data.getStringExtra("nama");
+            productArray = new ArrayList<>();
+            productArray = (ArrayList<TransModel>) data.getSerializableExtra("productArray");
+
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i < listCart.size(); i++) {
+                        listCart.get(i).setAmount(0);
+                        for (int j = 0; j < productArray.size(); j++) {
+                            if (listCart.get(i).getNameProduct().equals(productArray.get(j).getNameProduct())) {
+                                listCart.get(i).setAmount(productArray.get(j).getAmount());
+                            }
+                        }
+                    }
+                }
+            };
+            runnable.run();
+            adapter.notifyDataSetChanged();
+        }
     }
 }

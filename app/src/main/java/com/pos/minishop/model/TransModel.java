@@ -1,8 +1,11 @@
 package com.pos.minishop.model;
 
-public class TransModel {
+import java.io.Serializable;
+
+public class TransModel implements Serializable {
 
     private String cartImage,nameProduct,stock,price;
+    private int amount;
 
     public String getCartImage() {
         return cartImage;
@@ -34,5 +37,13 @@ public class TransModel {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }
