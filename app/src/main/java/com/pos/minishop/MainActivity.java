@@ -6,21 +6,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Menu;
-import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
-import com.pos.minishop.R;
 import com.pos.minishop.baseUrl.BaseUrl;
 import com.pos.minishop.ui.home.HomeFragment;
-import com.pos.minishop.ui.logOut.LogOutFragment;
 import com.pos.minishop.ui.member.MemberFragment;
 import com.pos.minishop.ui.transaksi.TransFragment;
 
@@ -29,10 +22,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -63,7 +53,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.getMenu().getItem(0).setChecked(true);
-        firstFragmentDisplay(R.id.nav_dash);
+        Boolean fromResult = getIntent().getBooleanExtra("randomVariable", false);
+        if(fromResult) firstFragmentDisplay(R.id.nav_trans);
+        else firstFragmentDisplay(R.id.nav_dash);
     }
 
     private void firstFragmentDisplay(int itemId) {

@@ -101,7 +101,7 @@ public class CartActivity extends AppCompatActivity {
         for (int i = 0;i < productArray.size();i++){
             finalPrice += productArray.get(i).getAmount() * productArray.get(i).getPriceInt();
         }
-        tvFinalPrice.setText("TOTAL : " + String.valueOf(finalPrice));
+        tvtotal.setText("Rp. " + finalPrice);
     }
 
     public void getDiscounts() {
@@ -164,7 +164,7 @@ public class CartActivity extends AppCompatActivity {
                 if (!discount.getName().equals("Choose discount")) {
                     idDiscount = discount.getId();
                     finalPrice = finalPrice - Math.round((Float.parseFloat(discount.getDiscount()) / 100) * finalPrice);
-                    tvFinalPrice.setText("TOTAL : " + String.valueOf(finalPrice));
+                    tvtotal.setText("Rp. "+ finalPrice);
                 }
             }
 

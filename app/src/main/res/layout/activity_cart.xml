@@ -6,11 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".CartActivity">
 
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="KERANJANG BELANJA ANDA : "
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="15dp"/>
+
     <ScrollView
         android:id="@+id/sv_cart"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/tv2"
         android:layout_width="match_parent"
-        android:layout_height="600dp">
+        android:layout_height="400dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -43,7 +53,7 @@
         android:id="@+id/spinner_discounts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/spinner_members"
+        android:layout_below="@+id/sv_cart"
         android:layout_marginTop="16dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="8dp"/>
@@ -52,13 +62,13 @@
         android:id="@+id/spinner_members"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tv_total"
+        android:layout_below="@+id/spinner_discounts"
         android:layout_marginTop="16dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="8dp"/>
 
     <TextView
-        android:layout_toRightOf="@+id/tv1"
+        android:layout_toRightOf="@+id/tv_cart_final_price"
         android:id="@+id/tv_total"
         android:layout_above="@+id/btn_submitCart"
         android:layout_marginBottom="10dp"

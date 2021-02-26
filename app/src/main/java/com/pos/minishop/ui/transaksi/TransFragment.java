@@ -1,5 +1,6 @@
 package com.pos.minishop.ui.transaksi;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +36,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
+import static io.realm.Realm.getApplicationContext;
 
 public class TransFragment extends Fragment implements Serializable {
 
@@ -43,6 +46,7 @@ public class TransFragment extends Fragment implements Serializable {
     private ArrayList<TransModel> listCart = new ArrayList<>();
     private ArrayList<TransModel> productArray;
     private TransAdapter adapter;
+    ProgressDialog progressDialog;
     TextView tvCount;
     ImageView ivC;
     TransFragment context;
@@ -56,6 +60,8 @@ public class TransFragment extends Fragment implements Serializable {
         rvTrans = root.findViewById(R.id.rv_cart);
         tvCount = root.findViewById(R.id.tv_countItem);
         ivC = root.findViewById(R.id.iv_count);
+
+        progressDialog = new ProgressDialog(getContext());
 
         context = this;
 
@@ -114,6 +120,9 @@ public class TransFragment extends Fragment implements Serializable {
         SharedPreferences sp = getActivity().getSharedPreferences("login", MODE_PRIVATE);
         String token = sp.getString("logged", "missing");
 
+        progressDialog.setTitle("Getting Data...");
+        progressDialog.show();
+
         AndroidNetworking.get(BaseUrl.url + "api/products")
                 .addHeaders("Authorization", "Bearer " + token)
                 .setPriority(Priority.LOW)
@@ -136,9 +145,14 @@ public class TransFragment extends Fragment implements Serializable {
                                     transModel.setStock(item.getString("stock"));
                                     transModel.setCartImage("https://afternoon-ocean-46596.herokuapp.com/storage/" + item.getString("image"));
                                     listCart.add(transModel);
+                                    progressDialog.dismiss();
                                 }
 
                                 showProducts();
+                            }
+                            else {
+                                Toast.makeText(getApplicationContext(), "gagal", Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -148,6 +162,7 @@ public class TransFragment extends Fragment implements Serializable {
 
                     @Override
                     public void onError(ANError anError) {
+                        progressDialog.dismiss();
                         Log.d("TAG", "onError: " + anError.getErrorDetail());
                         Log.d("TAG", "onError: " + anError.getErrorBody());
                         Log.d("TAG", "onError: " + anError.getErrorCode());
