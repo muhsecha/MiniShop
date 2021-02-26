@@ -23,6 +23,7 @@
             android:id="@+id/tv_date_listTrans"
             android:layout_marginVertical="10dp"
             android:layout_marginLeft="20dp"
+            android:textColor="@color/purple_light"
             android:text="2021-02-27"
             android:layout_below="@+id/tv_time_listTrans"
             android:layout_width="wrap_content"
