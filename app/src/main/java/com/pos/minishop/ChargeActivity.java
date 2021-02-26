@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -49,7 +50,6 @@ public class ChargeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 validate();
-                startActivity(new Intent(getApplicationContext(), ResultActivity.class));
             }
         });
 
@@ -63,6 +63,8 @@ public class ChargeActivity extends AppCompatActivity {
             finalPrice = getIntent().getIntExtra("finalPrice", 0);
             idDiscount = getIntent().getStringExtra("discount_id");
             idMember = getIntent().getStringExtra("member_id");
+            if(TextUtils.isEmpty(idMember)) idMember = null;
+            if(TextUtils.isEmpty(idDiscount)) idDiscount = null;
             bayar.setText("Rp. " + finalPrice);
             etCharge.setText("" + finalPrice);
         }
@@ -120,7 +122,7 @@ public class ChargeActivity extends AppCompatActivity {
                 AndroidNetworking.post(BaseUrl.url + "api/transactions")
                         .addHeaders("Authorization", "Bearer " + token)
                         .addBodyParameter("member_id", idMember)
-                        .addBodyParameter("user_id", idDiscount)
+                        .addBodyParameter("discount_id", idDiscount)
                         .addJSONObjectBody(transaction)
                         .setContentType("application/json")
                         .setPriority(Priority.LOW)
@@ -132,6 +134,7 @@ public class ChargeActivity extends AppCompatActivity {
                                     String status = response.getString("status");
                                     Log.d("hasil", "onResponse: " + status);
                                     Toast.makeText(ChargeActivity.this, status, Toast.LENGTH_SHORT).show();
+                                    if(status.equalsIgnoreCase("success")) startActivity(new Intent(getApplicationContext(), ResultActivity.class));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
