@@ -16,7 +16,7 @@
             android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_product"
+                android:id="@+id/rv_listmember"
                 android:theme="@style/ThemeOverlay.AppCompat.Light"
                 android:background="@color/white"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
