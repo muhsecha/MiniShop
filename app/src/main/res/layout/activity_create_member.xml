@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ti1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="50dp">
+
+        <EditText
+            android:id="@+id/et_fullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:hint="Full Name"
+            android:textColor="@color/black"
+            android:textColorHint="@color/purple_light" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ti2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ti1"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp">
+
+        <EditText
+            android:id="@+id/et_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:hint="Gender"
+            android:textColor="@color/black"
+            android:textColorHint="@color/purple_light" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ti3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ti2"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp">
+
+        <EditText
+            android:id="@+id/et_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:hint="Adress"
+            android:textColor="@color/black"
+            android:textColorHint="@color/purple_light" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/spinner_member_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ti3"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/et_datePicker"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner_member_category"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:clickable="true"
+        android:drawableEnd="@drawable/ic_date_range"
+        android:drawableRight="@drawable/ic_date_range"
+        android:focusable="true"
+        android:hint="Date"
+        android:padding="12dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/purple_light"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_datePicker"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/btn_universal"
+        android:text="Submit" />
+
+</RelativeLayout>

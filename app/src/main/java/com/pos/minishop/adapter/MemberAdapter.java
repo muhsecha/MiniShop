@@ -1,6 +1,5 @@
 package com.pos.minishop.adapter;
 
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,18 +8,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pos.minishop.DiscountManagementActivity;
 import com.pos.minishop.R;
-import com.pos.minishop.model.CategoryModel;
-import com.pos.minishop.model.DiscountModel;
-import com.pos.minishop.model.ListMemberModel;
+import com.pos.minishop.model.MemberModel;
+import com.pos.minishop.model.ProductModel;
 
 import java.util.ArrayList;
 
-public class MemberLisrAdapter extends RecyclerView.Adapter<MemberLisrAdapter.MemberViewHolder> {
-    private ArrayList<ListMemberModel> listMember;
+public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberViewHolder> {
+    private ArrayList<MemberModel> listMember;
+    private OnItemClickCallback onItemClickCallback;
 
-    public MemberLisrAdapter(ArrayList<ListMemberModel> listMember) {
+    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback;
+    }
+
+    public MemberAdapter(ArrayList<MemberModel> listMember) {
         this.listMember = listMember;
     }
 
@@ -33,11 +35,18 @@ public class MemberLisrAdapter extends RecyclerView.Adapter<MemberLisrAdapter.Me
 
     @Override
     public void onBindViewHolder(@NonNull MemberViewHolder holder, int position) {
-        ListMemberModel listMemberModel = listMember.get(position);
-        holder.nama.setText(listMemberModel.getNama());
-        holder.address.setText(listMemberModel.getAlamat());
-        holder.gender.setText(listMemberModel.getGender());
-        holder.date.setText(listMemberModel.getDate());
+        MemberModel member = listMember.get(position);
+        holder.nama.setText(member.getName());
+        holder.address.setText(member.getAddress());
+        holder.gender.setText(member.getGender());
+        holder.date.setText(member.getDate());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickCallback.onItemClicked(listMember.get(holder.getAdapterPosition()));
+            }
+        });
     }
 
     @Override
@@ -46,7 +55,8 @@ public class MemberLisrAdapter extends RecyclerView.Adapter<MemberLisrAdapter.Me
     }
 
     public class MemberViewHolder extends RecyclerView.ViewHolder {
-        TextView nama,address,gender,date;
+        TextView nama, address, gender, date;
+
         public MemberViewHolder(@NonNull View itemView) {
             super(itemView);
             nama = itemView.findViewById(R.id.tv_name_member);
@@ -54,5 +64,9 @@ public class MemberLisrAdapter extends RecyclerView.Adapter<MemberLisrAdapter.Me
             gender = itemView.findViewById(R.id.tv_gender_member);
             date = itemView.findViewById(R.id.tv_date_member);
         }
+    }
+
+    public interface OnItemClickCallback {
+        void onItemClicked(MemberModel data);
     }
 }
