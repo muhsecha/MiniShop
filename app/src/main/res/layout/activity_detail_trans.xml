@@ -8,96 +8,117 @@
 
     <TextView
         android:id="@+id/tv2"
-        android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TRANSAKSI BELANJA ANDA"
-        android:textStyle="bold"
+        android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:text="TRANSAKSI BELANJA ANDA"
         android:textColor="@color/black"
-        android:layout_marginTop="15dp"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv3"
-        android:layout_below="@+id/tv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Transaksi Pukul      : "
-        android:textColor="@color/black"
+        android:layout_below="@+id/tv2"
         android:layout_marginLeft="10dp"
-        android:layout_marginVertical="10dp"/>
+        android:layout_marginTop="10dp"
+        android:text="Transaksi Pukul         : "
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/tv4"
-        android:layout_below="@+id/tv3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Transaksi Tanggal : "
-        android:textColor="@color/black"
-        android:layout_marginLeft="10dp"/>
+        android:layout_below="@+id/tv3"
+        android:layout_marginVertical="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Transaksi Tanggal    : "
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tv5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv4"
+        android:layout_marginLeft="10dp"
+        android:text="Trx Number                : "
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/tv_detail_jam"
-        android:layout_below="@+id/tv2"
-        android:layout_marginVertical="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="12:07:46"/>
+        android:layout_below="@+id/tv2"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:text="12:07:46" />
 
     <TextView
         android:id="@+id/tv_detail_tgl"
-        android:layout_below="@+id/tv_detail_jam"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2021-02-28"/>
+        android:layout_below="@+id/tv_detail_jam"
+        android:layout_alignParentRight="true"
+        android:layout_marginVertical="10dp"
+        android:layout_marginRight="15dp"
+        android:text="2021-02-28" />
+
+    <TextView
+        android:id="@+id/tv_trx_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_detail_tgl"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:text="210228133441" />
 
     <ScrollView
         android:id="@+id/sv_cart"
-        android:layout_below="@id/tv4"
         android:layout_width="match_parent"
-        android:layout_height="400dp">
+        android:layout_height="400dp"
+        android:layout_below="@id/tv5">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_list_cart"
-                android:theme="@style/ThemeOverlay.AppCompat.Light"
-                android:background="@color/white"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                android:id="@+id/rv_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="20dp"
-                tools:listitem="@layout/list_detail_transaksi"
-                android:layout_marginHorizontal="5dp">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:background="@color/white"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:listitem="@layout/list_detail_transaksi"></androidx.recyclerview.widget.RecyclerView>
         </RelativeLayout>
     </ScrollView>
 
     <TextView
         android:id="@+id/tv_cart_final_price"
-        android:layout_below="@id/sv_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_below="@id/sv_cart"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="25dp"
-        android:textColor="@color/black"
+        android:layout_marginBottom="10dp"
         android:text="TOTAL : "
-        android:textStyle="bold"/>
+        android:textColor="@color/black"
+        android:textStyle="bold" />
 
     <TextView
-        android:layout_toRightOf="@+id/tv_cart_final_price"
         android:id="@+id/tv_total"
-        android:layout_marginTop="25dp"
-        android:layout_below="@+id/sv_cart"
-        android:layout_marginBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/sv_cart"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@+id/tv_cart_final_price"
         android:text="Rp. "
-        android:textColor="@color/purple_dark"/>
+        android:textColor="@color/purple_dark" />
 
 </RelativeLayout>

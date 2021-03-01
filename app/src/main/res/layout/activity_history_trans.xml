@@ -8,35 +8,35 @@
 
     <TextView
         android:id="@+id/tv5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="LIST TRANSAKSI : "
         android:textColor="@color/black"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <ScrollView
         android:id="@+id/sv_list"
-        android:layout_below="@+id/tv5"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv5">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_product"
-                android:theme="@style/ThemeOverlay.AppCompat.Light"
-                android:background="@color/white"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                android:id="@+id/rv_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="10dp"
-                tools:listitem="@layout/list_transaksi"
-                android:layout_marginHorizontal="5dp">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:background="@color/white"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:listitem="@layout/list_transaksi"></androidx.recyclerview.widget.RecyclerView>
         </RelativeLayout>
     </ScrollView>
 

@@ -11,7 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MiniShop">
         <activity android:name=".DetailTransActivity"></activity>
-        <activity android:name=".HistoryTransActivity" />
+        <activity android:name=".HistoryTransActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ListMemberActivity" />
         <activity android:name=".EditDiscountActivity" />
         <activity android:name=".CreateDiscountActivity" />
@@ -24,11 +30,7 @@
         <activity android:name=".CalcuActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".CategoryManagementActivity" />
         <activity android:name=".InputProductActivity" />
