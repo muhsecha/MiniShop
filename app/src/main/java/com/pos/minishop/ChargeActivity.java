@@ -1,7 +1,5 @@
 package com.pos.minishop;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,13 +11,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.pos.minishop.baseUrl.BaseUrl;
 import com.pos.minishop.model.TransModel;
-import com.pos.minishop.ui.home.HomeFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,10 +27,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class ChargeActivity extends AppCompatActivity {
-    EditText etCharge;
-    TextView bayar;
-    Button btnSubmit;
-    Bundle bundle;
+    private EditText etCharge;
+    private TextView bayar;
+    private Button btnSubmit;
+    private Bundle bundle;
     private ArrayList<TransModel> productArray;
     int finalPrice;
     int input;
@@ -63,8 +62,8 @@ public class ChargeActivity extends AppCompatActivity {
             finalPrice = getIntent().getIntExtra("finalPrice", 0);
             idDiscount = getIntent().getStringExtra("discount_id");
             idMember = getIntent().getStringExtra("member_id");
-            if(TextUtils.isEmpty(idMember)) idMember = null;
-            if(TextUtils.isEmpty(idDiscount)) idDiscount = null;
+            if (TextUtils.isEmpty(idMember)) idMember = null;
+            if (TextUtils.isEmpty(idDiscount)) idDiscount = null;
             bayar.setText("Rp. " + finalPrice);
             etCharge.setText("" + finalPrice);
         }
@@ -95,7 +94,6 @@ public class ChargeActivity extends AppCompatActivity {
                 }
 
                 JSONObject transaction = new JSONObject();
-                JSONObject transactionArrayData = new JSONObject();
                 JSONArray transactionArray = new JSONArray();
                 productArray = new ArrayList<>();
                 productArray = (ArrayList<TransModel>) getIntent().getSerializableExtra("productArray");
@@ -104,6 +102,7 @@ public class ChargeActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             for (int i = 0; i < productArray.size(); ++i) {
+                                JSONObject transactionArrayData = new JSONObject();
                                 transactionArrayData.put("product_id", Integer.parseInt(productArray.get(i).getProductId()));
                                 transactionArrayData.put("quantity", productArray.get(i).getAmount());
                                 transactionArrayData.put("total", productArray.get(i).getPriceInt());
@@ -134,7 +133,8 @@ public class ChargeActivity extends AppCompatActivity {
                                     String status = response.getString("status");
                                     Log.d("hasil", "onResponse: " + status);
                                     Toast.makeText(ChargeActivity.this, status, Toast.LENGTH_SHORT).show();
-                                    if(status.equalsIgnoreCase("success")) startActivity(new Intent(getApplicationContext(), ResultActivity.class));
+                                    if (status.equalsIgnoreCase("success"))
+                                        startActivity(new Intent(getApplicationContext(), ResultActivity.class));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
