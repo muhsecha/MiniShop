@@ -1,64 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="15dp">
 
     <RelativeLayout
-        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true">
+
         <ImageView
             android:id="@+id/iv_cart_list"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/bg_image_discount"
-            android:src="@mipmap/img"
-            android:layout_marginLeft="20dp"/>
+            android:src="@mipmap/img" />
+
         <RelativeLayout
             android:id="@+id/rl_cart"
-            android:layout_toRightOf="@+id/iv_cart_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_cart_list"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/tv_cart_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tahu bakso"
                 android:layout_centerVertical="true"
-                android:textColor="@color/black"
                 android:layout_marginLeft="15dp"
-                android:textSize="15dp"/>
+                android:text="Tahu bakso"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
             <TextView
                 android:id="@+id/tv_cart_stock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_cart_name"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"/>
+                android:text="0" />
+
             <TextView
                 android:id="@+id/tv1"
-                android:layout_toRightOf="@+id/tv_cart_stock"
-                android:layout_below="@+id/tv_cart_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_cart_name"
+                android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/tv_cart_stock"
                 android:text="X"
-                android:textColor="@color/black"
-                android:layout_marginHorizontal="5dp"/>
+                android:textColor="@color/black" />
+
             <TextView
                 android:id="@+id/tv_cart_price"
-                android:layout_toRightOf="@+id/tv1"
-                android:layout_below="@+id/tv_cart_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_cart_name"
                 android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/tv1"
                 android:text="Rp. "
-                android:textColor="@color/purple_dark"
-                />
+                android:textColor="@color/purple_dark" />
         </RelativeLayout>
     </RelativeLayout>
 

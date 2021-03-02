@@ -71,9 +71,6 @@ public class HistoryTransActivity extends AppCompatActivity {
                             if (status.equals("success")) {
                                 JSONArray data = response.getJSONArray("data");
 
-                                // list transaksi orderby trx
-                                // total harga
-                                // time, date
                                 String trxNumber = null;
                                 for (int i = 0; i < data.length(); i++) {
                                     JSONObject item = data.getJSONObject(i);

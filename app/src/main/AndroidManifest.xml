@@ -13,8 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MiniShop">
-        <activity android:name=".CreateMemberActivity"></activity>
-        <activity android:name=".EditMemberActivity"></activity>
+        <activity android:name=".CreateMemberActivity" />
+        <activity android:name=".EditMemberActivity" />
         <activity android:name=".DetailTransActivity" />
         <activity android:name=".HistoryTransActivity" />
         <activity android:name=".ListMemberActivity" />
@@ -28,13 +28,6 @@
         <activity android:name=".ResultActivity" />
         <activity android:name=".CalcuActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".CategoryManagementActivity" />
         <activity android:name=".InputProductActivity" />
         <activity android:name=".ProductManagementActivity" />
@@ -42,6 +35,13 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.MiniShop.NoActionBar" />
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.pos.minishop.R;
+import com.pos.minishop.baseUrl.BaseUrl;
 import com.pos.minishop.model.HistoryModel;
 
 import java.util.ArrayList;
@@ -37,9 +38,9 @@ public class DetailHistoryAdapter extends RecyclerView.Adapter<DetailHistoryAdap
         holder.tvPrice.setText(history.getPrice());
         holder.tvTotalItem.setText(history.getTotalItem());
 
-        if (history.getImage() != null) {
+        if (!history.getImage().equals("null")) {
             Glide.with(holder.itemView.getContext())
-                    .load(history.getImage())
+                    .load(BaseUrl.url + "storage/" + history.getImage())
                     .into(holder.ivProduct);
         }
     }

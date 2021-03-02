@@ -82,7 +82,7 @@ public class TransFragment extends Fragment implements Serializable {
                     }
                 };
                 runnable.run();
-                if(exist) {
+                if (exist) {
                     Intent intent = new Intent(getActivity(), CartActivity.class);
                     intent.putExtra("productArray", productArray);
                     Log.d("productArray", productArray.toString());
@@ -143,14 +143,13 @@ public class TransFragment extends Fragment implements Serializable {
                                     transModel.setPrice("Rp. " + item.getString("price"));
                                     transModel.setPriceInt(item.getInt("price"));
                                     transModel.setStock(item.getString("stock"));
-                                    transModel.setCartImage("https://afternoon-ocean-46596.herokuapp.com/storage/" + item.getString("image"));
+                                    transModel.setCartImage(item.getString("image"));
                                     listCart.add(transModel);
                                     progressDialog.dismiss();
                                 }
 
                                 showProducts();
-                            }
-                            else {
+                            } else {
                                 Toast.makeText(getApplicationContext(), "gagal", Toast.LENGTH_SHORT).show();
                                 progressDialog.dismiss();
                             }

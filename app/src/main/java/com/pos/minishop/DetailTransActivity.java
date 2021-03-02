@@ -95,7 +95,7 @@ public class DetailTransActivity extends AppCompatActivity {
                                         history.setQuantity(quantity);
                                         history.setPrice(price);
                                         history.setTotalItem(String.valueOf(totalItem));
-                                        history.setImage(BaseUrl.url + "storage/" + image);
+                                        history.setImage(image);
                                         listHistory.add(history);
                                     }
                                 }

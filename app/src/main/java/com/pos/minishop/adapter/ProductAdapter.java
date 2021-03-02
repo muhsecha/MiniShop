@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.pos.minishop.CategoryManagementActivity;
 import com.pos.minishop.R;
+import com.pos.minishop.baseUrl.BaseUrl;
 import com.pos.minishop.model.CategoryModel;
 import com.pos.minishop.model.ProductModel;
 
@@ -43,9 +44,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.price.setText("Rp. " + productModel.getPrice());
         holder.stock.setText(productModel.getStock());
 
-        if (productModel.getImage() != null) {
+        if (!productModel.getImage().equals("null")) {
             Glide.with(holder.itemView.getContext())
-                    .load(productModel.getImage())
+                    .load(BaseUrl.url + "storage/" + productModel.getImage())
                     .into(holder.image);
         }
 
