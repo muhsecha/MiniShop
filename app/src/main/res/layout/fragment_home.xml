@@ -83,5 +83,28 @@
         android:layout_width="match_parent"
         android:background="#BDBDBD"
         android:layout_height="1dp" />
-
+    <LinearLayout
+        android:id="@+id/ln_history"
+        android:layout_width="match_parent"
+        android:layout_height="65dp">
+       <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_history"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="REPORT TRANSACTION"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:textSize="16sp"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="#BDBDBD"
+        android:layout_height="1dp" />
 </LinearLayout>

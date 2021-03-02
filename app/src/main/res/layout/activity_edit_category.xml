@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.DetailCategoryActivity"
-    android:background="#F3E5F5">
+    tools:context=".EditCategoryActivity"
+    android:background="#fff">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ti1"
@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name"
-            android:background="#F3E5F5"/>
+            android:background="#fff"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
