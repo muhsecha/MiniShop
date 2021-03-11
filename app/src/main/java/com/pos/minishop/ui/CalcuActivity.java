@@ -1,15 +1,16 @@
-package com.pos.minishop;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.pos.minishop.ui;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.pos.minishop.R;
 
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
@@ -17,6 +18,7 @@ import net.objecthunter.exp4j.ExpressionBuilder;
 public class CalcuActivity extends AppCompatActivity {
     // IDs of all the numeric buttons
     private final int[] numericButtons = {R.id.btnZero, R.id.btnOne, R.id.btnTwo, R.id.btnThree, R.id.btnFour, R.id.btnFive, R.id.btnSix, R.id.btnSeven, R.id.btnEight, R.id.btnNine};
+    SharedPreferences sp;
     // TextView used to display the output
     private TextView txtScreen;
     // Represent whether the lastly pressed key is numeric or not
@@ -25,8 +27,6 @@ public class CalcuActivity extends AppCompatActivity {
     private boolean stateError;
     // If true, do not allow to add another DOT
     private boolean lastDot;
-
-    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,6 @@ public class CalcuActivity extends AppCompatActivity {
         setOperatorOnClickListener();
 
     }
-
 
 
     /**
@@ -142,9 +141,9 @@ public class CalcuActivity extends AppCompatActivity {
                 SharedPreferences mSettings = getSharedPreferences("Settings", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = mSettings.edit();
                 String hasil = Double.toString(result);
-                editor.putString("result",hasil);
+                editor.putString("result", hasil);
                 editor.apply();
-                startActivity(new Intent(getApplicationContext(),ResultActivity.class));
+                startActivity(new Intent(getApplicationContext(), ResultActivity.class));
                 lastDot = true; // Result contains a dot
             } catch (ArithmeticException ex) {
                 // Display an error message

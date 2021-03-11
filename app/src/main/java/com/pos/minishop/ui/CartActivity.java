@@ -1,8 +1,4 @@
-package com.pos.minishop;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.pos.minishop.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,16 +12,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.pos.minishop.R;
 import com.pos.minishop.adapter.CartAdapter;
 import com.pos.minishop.baseUrl.BaseUrl;
 import com.pos.minishop.model.DiscountModel;
-import com.pos.minishop.model.MemberCategoryModel;
 import com.pos.minishop.model.MemberModel;
-import com.pos.minishop.model.ProductCategoryModel;
 import com.pos.minishop.model.TransModel;
 
 import org.json.JSONArray;
@@ -35,15 +34,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class CartActivity extends AppCompatActivity {
+    private final ArrayList<DiscountModel> listDiscount = new ArrayList<>();
+    private final ArrayList<MemberModel> listMember = new ArrayList<>();
     Button btnSubmit;
     TextView tvtotal, tvFinalPrice;
     Bundle bundle;
     int finalPrice = 0;
-    private ArrayList<TransModel> productArray;
     RecyclerView recyclerView;
     CartAdapter adapter;
-    private ArrayList<DiscountModel> listDiscount = new ArrayList<>();
-    private ArrayList<MemberModel> listMember = new ArrayList<>();
+    private ArrayList<TransModel> productArray;
     private Spinner spinnerDiscounts, spinnerMembers;
     private String idDiscount = null, idMember = null;
 
@@ -95,10 +94,10 @@ public class CartActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    public void hitung(){
+    public void hitung() {
         productArray = new ArrayList<>();
         productArray = (ArrayList<TransModel>) getIntent().getSerializableExtra("productArray");
-        for (int i = 0;i < productArray.size();i++){
+        for (int i = 0; i < productArray.size(); i++) {
             finalPrice += productArray.get(i).getAmount() * productArray.get(i).getPriceInt();
         }
         tvtotal.setText("Rp. " + finalPrice);
@@ -143,11 +142,24 @@ public class CartActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError(ANError anError) {
-                        Log.d("TAG", "onError: " + anError.getErrorDetail());
-                        Log.d("TAG", "onError: " + anError.getErrorBody());
-                        Log.d("TAG", "onError: " + anError.getErrorCode());
-                        Log.d("TAG", "onError: " + anError.getResponse());
+                    public void onError(ANError error) {
+                        Integer errorCode = error.getErrorCode();
+
+                        if (errorCode != 0) {
+                            if (errorCode == 401) {
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.clear();
+                                editor.apply();
+
+                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            }
+
+                            Log.d("TAG", "onError errorCode : " + error.getErrorCode());
+                            Log.d("TAG", "onError errorBody : " + error.getErrorBody());
+                            Log.d("TAG", "onError errorDetail : " + error.getErrorDetail());
+                        } else {
+                            Log.d("TAG", "onError errorDetail : " + error.getErrorDetail());
+                        }
                     }
                 });
     }
@@ -164,7 +176,7 @@ public class CartActivity extends AppCompatActivity {
                 if (!discount.getName().equals("Choose discount")) {
                     idDiscount = discount.getId();
                     finalPrice = finalPrice - Math.round((Float.parseFloat(discount.getDiscount()) / 100) * finalPrice);
-                    tvtotal.setText("Rp. "+ finalPrice);
+                    tvtotal.setText("Rp. " + finalPrice);
                 }
             }
 
@@ -213,11 +225,24 @@ public class CartActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError(ANError anError) {
-                        Log.d("TAG", "onError: " + anError.getErrorDetail());
-                        Log.d("TAG", "onError: " + anError.getErrorBody());
-                        Log.d("TAG", "onError: " + anError.getErrorCode());
-                        Log.d("TAG", "onError: " + anError.getResponse());
+                    public void onError(ANError error) {
+                        Integer errorCode = error.getErrorCode();
+
+                        if (errorCode != 0) {
+                            if (errorCode == 401) {
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.clear();
+                                editor.apply();
+
+                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            }
+
+                            Log.d("TAG", "onError errorCode : " + error.getErrorCode());
+                            Log.d("TAG", "onError errorBody : " + error.getErrorBody());
+                            Log.d("TAG", "onError errorDetail : " + error.getErrorDetail());
+                        } else {
+                            Log.d("TAG", "onError errorDetail : " + error.getErrorDetail());
+                        }
                     }
                 });
     }

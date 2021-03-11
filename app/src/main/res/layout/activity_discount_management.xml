@@ -4,32 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DiscountManagementActivity">
+    tools:context=".ui.ProductManagementActivity">
 
-        <ScrollView
-            android:id="@+id/sv_list"
-            android:layout_alignParentTop="true"
+    <ScrollView
+        android:id="@+id/sv_list"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="600dp">
+            android:layout_height="wrap_content">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_discount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:listitem="@layout/list_discount"></androidx.recyclerview.widget.RecyclerView>
+        </RelativeLayout>
+    </ScrollView>
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_discount"
-                            android:theme="@style/ThemeOverlay.AppCompat.Light"
-                            android:background="@color/white"
-                            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            tools:listitem="@layout/list_discount"
-                            android:layout_marginHorizontal="5dp">
-                        </androidx.recyclerview.widget.RecyclerView>
-                </RelativeLayout>
-        </ScrollView>
-
+<<<<<<< HEAD
         <Button
             android:id="@+id/btn_add_discount"
             android:background="@mipmap/add"
@@ -40,4 +40,24 @@
             android:layout_width="50dp"
             android:layout_height="50dp"/>
 
+=======
+    <!--        <Button-->
+    <!--            android:id="@+id/btn_add_discount"-->
+    <!--            android:layout_below="@id/sv_list"-->
+    <!--            android:background="@mipmap/add"-->
+    <!--            android:layout_marginTop="10dp"-->
+    <!--            android:layout_centerInParent="true"-->
+    <!--            android:layout_width="50dp"-->
+    <!--            android:layout_height="50dp"/>-->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_add_discount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="25dp"
+        android:src="@drawable/ic_tambah" />
+>>>>>>> add remove token if status code 401
 </RelativeLayout>

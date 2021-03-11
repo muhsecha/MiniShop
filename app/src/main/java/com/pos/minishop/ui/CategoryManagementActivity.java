@@ -1,8 +1,4 @@
-package com.pos.minishop;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.pos.minishop.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,10 +9,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.pos.minishop.R;
 import com.pos.minishop.adapter.CategoryAdapter;
 import com.pos.minishop.baseUrl.BaseUrl;
 import com.pos.minishop.model.CategoryModel;
@@ -28,10 +29,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class CategoryManagementActivity extends AppCompatActivity {
-    private RecyclerView rvCategory;
-    private ArrayList<CategoryModel> listCategory = new ArrayList<>();
+    private final ArrayList<CategoryModel> listCategory = new ArrayList<>();
     EditText etInput;
     Button btnplus;
+    private RecyclerView rvCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +85,25 @@ public class CategoryManagementActivity extends AppCompatActivity {
                                 }
 
                                 @Override
-                                public void onError(ANError anError) {
+                                public void onError(ANError error) {
                                     Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
-                                    Log.d("TAG", "onError: " + anError.getErrorDetail());
-                                    Log.d("TAG", "onError: " + anError.getErrorBody());
-                                    Log.d("TAG", "onError: " + anError.getErrorCode());
-                                    Log.d("TAG", "onError: " + anError.getResponse());
+                                    Integer errorCode = error.getErrorCode();
+
+                                    if (errorCode != 0) {
+                                        if (errorCode == 401) {
+                                            SharedPreferences.Editor editor = sp.edit();
+                                            editor.clear();
+                                            editor.apply();
+
+                                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                        }
+
+                                        Log.d("TAG", "onError errorCode : " + error.getErrorCode());
+                                        Log.d("TAG", "onError errorBody : " + error.getErrorBody());
+                                        Log.d("TAG", "onError errorDetail : " + error.getErrorDetail());
+                                    } else {
+                                        Log.d("TAG", "onError errorDetail : " + error.getErrorDetail());
+                                    }
                                 }
                             });
                 }
@@ -97,6 +111,7 @@ public class CategoryManagementActivity extends AppCompatActivity {
         });
 
     }
+
     public void showCategories() {
         rvCategory.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         CategoryAdapter categoryAdapter = new CategoryAdapter(listCategory, CategoryManagementActivity.this);
@@ -147,11 +162,24 @@ public class CategoryManagementActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError(ANError anError) {
-                        Log.d("TAG", "onError: " + anError.getErrorDetail());
-                        Log.d("TAG", "onError: " + anError.getErrorBody());
-                        Log.d("TAG", "onError: " + anError.getErrorCode());
-                        Log.d("TAG", "onError: " + anError.getResponse());
+                    public void onError(ANError error) {
+                        Integer errorCode = error.getErrorCode();
+
+                        if (errorCode != 0) {
+                            if (errorCode == 401) {
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.clear();
+                                editor.apply();
+
+                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            }
+
+                            Log.d("TAG", "onError errorCode : " + error.getErrorCode());
+                            Log.d("TAG", "onError errorBody : " + error.getErrorBody());
+                            Log.d("TAG", "onError errorDetail : " + error.getErrorDetail());
+                        } else {
+                            Log.d("TAG", "onError errorDetail : " + error.getErrorDetail());
+                        }
                     }
                 });
     }

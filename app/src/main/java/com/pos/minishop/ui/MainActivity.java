@@ -1,4 +1,4 @@
-package com.pos.minishop;
+package com.pos.minishop.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,36 +7,37 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.ui.AppBarConfiguration;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.android.material.navigation.NavigationView;
+import com.pos.minishop.R;
 import com.pos.minishop.baseUrl.BaseUrl;
 import com.pos.minishop.ui.home.HomeFragment;
 import com.pos.minishop.ui.member.MemberFragment;
 import com.pos.minishop.ui.transaksi.TransFragment;
-
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.view.GravityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private AppBarConfiguration mAppBarConfiguration;
     Fragment fragment;
     ActionBarDrawerToggle toggle;
     DrawerLayout drawer;
     FragmentTransaction transaction;
+    private AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.getMenu().getItem(0).setChecked(true);
         Boolean fromResult = getIntent().getBooleanExtra("randomVariable", false);
-        if(fromResult) firstFragmentDisplay(R.id.nav_trans);
+        if (fromResult) firstFragmentDisplay(R.id.nav_trans);
         else firstFragmentDisplay(R.id.nav_dash);
     }
 
@@ -137,10 +138,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                                     @Override
                                     public void onError(ANError anError) {
-                                        Log.d("TAG", "onError: " + anError.getErrorDetail());
-                                        Log.d("TAG", "onError: " + anError.getErrorBody());
-                                        Log.d("TAG", "onError: " + anError.getErrorCode());
-                                        Log.d("TAG", "onError: " + anError.getResponse());
+                                        Integer errorCode = anError.getErrorCode();
+
+                                        if (errorCode != 0) {
+                                            if (errorCode == 401) {
+                                                SharedPreferences.Editor editor = sp.edit();
+                                                editor.clear();
+                                                editor.apply();
+
+                                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                            }
+
+                                            Log.d("TAG", "onError errorCode : " + anError.getErrorCode());
+                                            Log.d("TAG", "onError errorBody : " + anError.getErrorBody());
+                                            Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                                        } else {
+                                            Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                                        }
                                     }
                                 });
                     }

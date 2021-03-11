@@ -1,6 +1,4 @@
-package com.pos.minishop;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.pos.minishop.ui;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -16,13 +14,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.pos.minishop.R;
 import com.pos.minishop.baseUrl.BaseUrl;
 import com.pos.minishop.model.MemberCategoryModel;
-import com.pos.minishop.model.MemberModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,19 +33,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class EditMemberActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class CreateMemberActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private final ArrayList<MemberCategoryModel> listMemberCategory = new ArrayList<>();
     private Calendar myCalendar;
     private DatePickerDialog.OnDateSetListener date;
     private Button btnSubmit;
     private EditText etFullName, etGender, etAddress, etDate;
     private Spinner spinnerMemberCategory;
-    private ArrayList<MemberCategoryModel> listMemberCategory = new ArrayList<>();
     private String idMemberCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_member);
+        setContentView(R.layout.activity_create_member);
 
         btnSubmit = findViewById(R.id.btn_submit);
         etFullName = findViewById(R.id.et_fullName);
@@ -53,14 +53,6 @@ public class EditMemberActivity extends AppCompatActivity implements AdapterView
         etAddress = findViewById(R.id.et_address);
         etDate = findViewById(R.id.et_datePicker);
         spinnerMemberCategory = findViewById(R.id.spinner_member_category);
-
-        Intent intent = getIntent();
-        MemberModel item = intent.getParcelableExtra("Item Data");
-        idMemberCategory = item.getMemberCategoryId();
-        etFullName.setText(item.getName());
-        etGender.setText(item.getGender());
-        etAddress.setText(item.getAddress());
-        etDate.setText(item.getDate());
 
         myCalendar = Calendar.getInstance();
         date = new DatePickerDialog.OnDateSetListener() {
@@ -80,7 +72,7 @@ public class EditMemberActivity extends AppCompatActivity implements AdapterView
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(EditMemberActivity.this, date,
+                new DatePickerDialog(CreateMemberActivity.this, date,
                         myCalendar.get(Calendar.YEAR),
                         myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -126,7 +118,7 @@ public class EditMemberActivity extends AppCompatActivity implements AdapterView
                     SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
                     String token = sp.getString("logged", "missing");
 
-                    AndroidNetworking.put(BaseUrl.url + "api/members/" + item.getId())
+                    AndroidNetworking.post(BaseUrl.url + "api/members")
                             .addHeaders("Authorization", "Bearer " + token)
                             .addBodyParameter("full_name", fullName)
                             .addBodyParameter("gender", gender)
@@ -157,10 +149,23 @@ public class EditMemberActivity extends AppCompatActivity implements AdapterView
 
                                 @Override
                                 public void onError(ANError anError) {
-                                    Log.d("TAG", "onError: " + anError.getErrorDetail());
-                                    Log.d("TAG", "onError: " + anError.getErrorBody());
-                                    Log.d("TAG", "onError: " + anError.getErrorCode());
-                                    Log.d("TAG", "onError: " + anError.getResponse());
+                                    Integer errorCode = anError.getErrorCode();
+
+                                    if (errorCode != 0) {
+                                        if (errorCode == 401) {
+                                            SharedPreferences.Editor editor = sp.edit();
+                                            editor.clear();
+                                            editor.apply();
+
+                                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                        }
+
+                                        Log.d("TAG", "onError errorCode : " + anError.getErrorCode());
+                                        Log.d("TAG", "onError errorBody : " + anError.getErrorBody());
+                                        Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                                    } else {
+                                        Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                                    }
                                 }
                             });
                 }
@@ -216,14 +221,6 @@ public class EditMemberActivity extends AppCompatActivity implements AdapterView
                                 }
 
                                 showMemberCategory();
-                                if (idMemberCategory != null) {
-                                    for(int i = 1; i < listMemberCategory.size(); i++) {
-                                        String id = listMemberCategory.get(i).getId();
-                                        if(id.equals(idMemberCategory)) {
-                                            spinnerMemberCategory.setSelection(i);
-                                        }
-                                    }
-                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -233,10 +230,23 @@ public class EditMemberActivity extends AppCompatActivity implements AdapterView
 
                     @Override
                     public void onError(ANError anError) {
-                        Log.d("TAG", "onError: " + anError.getErrorDetail());
-                        Log.d("TAG", "onError: " + anError.getErrorBody());
-                        Log.d("TAG", "onError: " + anError.getErrorCode());
-                        Log.d("TAG", "onError: " + anError.getResponse());
+                        Integer errorCode = anError.getErrorCode();
+
+                        if (errorCode != 0) {
+                            if (errorCode == 401) {
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.clear();
+                                editor.apply();
+
+                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            }
+
+                            Log.d("TAG", "onError errorCode : " + anError.getErrorCode());
+                            Log.d("TAG", "onError errorBody : " + anError.getErrorBody());
+                            Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                        } else {
+                            Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                        }
                     }
                 });
     }

@@ -1,7 +1,7 @@
 package com.pos.minishop.model;
 
 public class DetailModel {
-    String nama,stock,harga,jam,tanggal,total;
+    String nama, stock, harga, jam, tanggal, total;
 
     public String getNama() {
         return nama;

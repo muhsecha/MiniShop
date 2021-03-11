@@ -1,4 +1,4 @@
-package com.pos.minishop;
+package com.pos.minishop.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +17,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.pos.minishop.R;
 import com.pos.minishop.baseUrl.BaseUrl;
 import com.pos.minishop.model.TransModel;
 
@@ -27,13 +28,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class ChargeActivity extends AppCompatActivity {
+    int finalPrice;
+    int input;
     private EditText etCharge;
     private TextView bayar;
     private Button btnSubmit;
     private Bundle bundle;
     private ArrayList<TransModel> productArray;
-    int finalPrice;
-    int input;
     private String idDiscount = null, idMember = null;
 
     @Override
@@ -143,10 +144,23 @@ public class ChargeActivity extends AppCompatActivity {
                             @Override
                             public void onError(ANError anError) {
                                 Toast.makeText(getApplicationContext(), "error toast", Toast.LENGTH_LONG).show();
-                                Log.d("TAG", "onError: " + anError.getErrorDetail());
-                                Log.d("TAG", "onError: " + anError.getErrorBody());
-                                Log.d("TAG", "onError: " + anError.getErrorCode());
-                                Log.d("TAG", "onError: " + anError.getResponse());
+                                Integer errorCode = anError.getErrorCode();
+
+                                if (errorCode != 0) {
+                                    if (errorCode == 401) {
+                                        SharedPreferences.Editor editor = sp.edit();
+                                        editor.clear();
+                                        editor.apply();
+
+                                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                    }
+
+                                    Log.d("TAG", "onError errorCode : " + anError.getErrorCode());
+                                    Log.d("TAG", "onError errorBody : " + anError.getErrorBody());
+                                    Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                                } else {
+                                    Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                                }
                             }
                         });
             } catch (Exception e) {

@@ -1,37 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
     <RelativeLayout
         android:id="@+id/rv_list"
         android:layout_width="match_parent"
         android:layout_height="50dp">
+
         <TextView
             android:id="@+id/tv_listCategory_list"
-            android:text="add on"
-            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="add on"
             android:textColor="@color/black"
-            android:layout_marginLeft="15dp"/>
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btn_delete"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:layout_centerVertical="true"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:background="@mipmap/delete"/>
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@mipmap/delete" />
     </RelativeLayout>
+
     <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
         android:layout_below="@+id/rv_list"
         android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:background="@color/purple_dark"
-        android:layout_height="2dp"/>
+        android:background="@color/purple_dark" />
 
 </RelativeLayout>

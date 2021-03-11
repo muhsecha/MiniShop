@@ -4,87 +4,88 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CartActivity">
+    tools:context=".ui.CartActivity">
 
     <TextView
         android:id="@+id/tv2"
-        android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="KERANJANG BELANJA ANDA : "
+        android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
-        android:textColor="@color/black"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="15dp"
+        android:text="KERANJANG BELANJA ANDA : "
+        android:textColor="@color/black" />
 
     <ScrollView
         android:id="@+id/sv_cart"
-        android:layout_below="@id/tv2"
         android:layout_width="match_parent"
-        android:layout_height="400dp">
+        android:layout_height="400dp"
+        android:layout_below="@id/tv2">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_list_cart"
-                android:theme="@style/ThemeOverlay.AppCompat.Light"
-                android:background="@color/white"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="20dp"
-                tools:listitem="@layout/list_cart"
-                android:layout_marginHorizontal="5dp">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:background="@color/white"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:listitem="@layout/list_cart"></androidx.recyclerview.widget.RecyclerView>
         </RelativeLayout>
     </ScrollView>
 
     <TextView
         android:id="@+id/tv_cart_final_price"
-        android:layout_above="@+id/btn_submitCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/btn_submitCart"
         android:layout_marginLeft="25dp"
-        android:textColor="@color/black"
+        android:layout_marginBottom="10dp"
         android:text="TOTAL : "
-        android:textStyle="bold"/>
+        android:textColor="@color/black"
+        android:textStyle="bold" />
 
     <Spinner
         android:id="@+id/spinner_discounts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sv_cart"
-        android:layout_marginTop="16dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
 
     <Spinner
         android:id="@+id/spinner_members"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/spinner_discounts"
-        android:layout_marginTop="16dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
 
     <TextView
-        android:layout_toRightOf="@+id/tv_cart_final_price"
         android:id="@+id/tv_total"
-        android:layout_above="@+id/btn_submitCart"
-        android:layout_marginBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_submitCart"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@+id/tv_cart_final_price"
         android:text="Rp. "
-        android:textColor="@color/purple_dark"/>
+        android:textColor="@color/purple_dark" />
 
     <Button
         android:id="@+id/btn_submitCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="25dp"
         android:layout_marginBottom="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="submit"/>
+        android:text="submit" />
 
 </RelativeLayout>

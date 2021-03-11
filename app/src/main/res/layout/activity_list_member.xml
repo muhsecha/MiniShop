@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListMemberActivity">
+    tools:context=".ui.ListMemberActivity">
 
     <ScrollView
         android:id="@+id/sv_list"
@@ -31,12 +31,12 @@
 
     <Button
         android:id="@+id/btn_add"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@mipmap/add"
-        android:layout_marginBottom="25dp"
-        android:layout_marginRight="25dp"
         android:layout_width="50dp"
-        android:layout_height="50dp"/>
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="25dp"
+        android:background="@mipmap/add" />
 
 </RelativeLayout>

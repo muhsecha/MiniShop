@@ -1,10 +1,4 @@
-package com.pos.minishop;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+package com.pos.minishop.ui;
 
 import android.Manifest;
 import android.content.Intent;
@@ -24,12 +18,19 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
 import com.bumptech.glide.Glide;
+import com.pos.minishop.R;
 import com.pos.minishop.baseUrl.BaseUrl;
 import com.pos.minishop.model.ProductCategoryModel;
 
@@ -41,13 +42,13 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class InputProductActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int STORAGE_PERMISSION_CODE = 123;
+    private final ArrayList<ProductCategoryModel> listProductCategory = new ArrayList<>();
     private ImageView ivProduct;
     private EditText etName, etPrice, etDesc, etStock;
     private Button btnSubmit;
-    private static final int PICK_IMAGE_REQUEST = 1;
-    private static final int STORAGE_PERMISSION_CODE = 123;
     private Uri imageUri;
-    private ArrayList<ProductCategoryModel> listProductCategory = new ArrayList<>();
     private Spinner spinnerProductCategory;
     private String idProductCategory;
 
@@ -141,10 +142,23 @@ public class InputProductActivity extends AppCompatActivity implements AdapterVi
                                 @Override
                                 public void onError(ANError anError) {
                                     Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
-                                    Log.d("TAG", "onError: " + anError.getErrorDetail());
-                                    Log.d("TAG", "onError: " + anError.getErrorBody());
-                                    Log.d("TAG", "onError: " + anError.getErrorCode());
-                                    Log.d("TAG", "onError: " + anError.getResponse());
+                                    Integer errorCode = anError.getErrorCode();
+
+                                    if (errorCode != 0) {
+                                        if (errorCode == 401) {
+                                            SharedPreferences.Editor editor = sp.edit();
+                                            editor.clear();
+                                            editor.apply();
+
+                                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                        }
+
+                                        Log.d("TAG", "onError errorCode : " + anError.getErrorCode());
+                                        Log.d("TAG", "onError errorBody : " + anError.getErrorBody());
+                                        Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                                    } else {
+                                        Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                                    }
                                 }
                             });
                 }
@@ -171,7 +185,7 @@ public class InputProductActivity extends AppCompatActivity implements AdapterVi
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             Log.d("TAG", "onDebug: " + getPath(imageUri));
             Glide.with(this).load(imageUri).into(ivProduct);
@@ -279,10 +293,23 @@ public class InputProductActivity extends AppCompatActivity implements AdapterVi
 
                     @Override
                     public void onError(ANError anError) {
-                        Log.d("TAG", "onError: " + anError.getErrorDetail());
-                        Log.d("TAG", "onError: " + anError.getErrorBody());
-                        Log.d("TAG", "onError: " + anError.getErrorCode());
-                        Log.d("TAG", "onError: " + anError.getResponse());
+                        Integer errorCode = anError.getErrorCode();
+
+                        if (errorCode != 0) {
+                            if (errorCode == 401) {
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.clear();
+                                editor.apply();
+
+                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            }
+
+                            Log.d("TAG", "onError errorCode : " + anError.getErrorCode());
+                            Log.d("TAG", "onError errorBody : " + anError.getErrorBody());
+                            Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                        } else {
+                            Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                        }
                     }
                 });
     }

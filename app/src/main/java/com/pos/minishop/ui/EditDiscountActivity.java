@@ -1,6 +1,4 @@
-package com.pos.minishop;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.pos.minishop.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,13 +9,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.pos.minishop.R;
 import com.pos.minishop.baseUrl.BaseUrl;
 import com.pos.minishop.model.DiscountModel;
-import com.pos.minishop.model.ProductModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -90,10 +90,23 @@ public class EditDiscountActivity extends AppCompatActivity {
                                 @Override
                                 public void onError(ANError anError) {
                                     Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
-                                    Log.d("TAG", "onError: " + anError.getErrorDetail());
-                                    Log.d("TAG", "onError: " + anError.getErrorBody());
-                                    Log.d("TAG", "onError: " + anError.getErrorCode());
-                                    Log.d("TAG", "onError: " + anError.getResponse());
+                                    Integer errorCode = anError.getErrorCode();
+
+                                    if (errorCode != 0) {
+                                        if (errorCode == 401) {
+                                            SharedPreferences.Editor editor = sp.edit();
+                                            editor.clear();
+                                            editor.apply();
+
+                                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                        }
+
+                                        Log.d("TAG", "onError errorCode : " + anError.getErrorCode());
+                                        Log.d("TAG", "onError errorBody : " + anError.getErrorBody());
+                                        Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                                    } else {
+                                        Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                                    }
                                 }
                             });
                 }

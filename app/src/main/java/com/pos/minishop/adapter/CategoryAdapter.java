@@ -2,6 +2,7 @@ package com.pos.minishop.adapter;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,10 +20,11 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.pos.minishop.CategoryManagementActivity;
 import com.pos.minishop.R;
 import com.pos.minishop.baseUrl.BaseUrl;
 import com.pos.minishop.model.CategoryModel;
+import com.pos.minishop.ui.CategoryManagementActivity;
+import com.pos.minishop.ui.LoginActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,18 +33,18 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>{
-    private ArrayList<CategoryModel> listCategory;
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
+    private final ArrayList<CategoryModel> listCategory;
+    private final CategoryManagementActivity categoryManagementActivity;
     private OnItemClickCallback onItemClickCallback;
-    private CategoryManagementActivity categoryManagementActivity;
-
-    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback;
-    }
 
     public CategoryAdapter(ArrayList<CategoryModel> listCategory, Activity CategoryManagementActivity) {
         this.listCategory = listCategory;
         this.categoryManagementActivity = (CategoryManagementActivity) CategoryManagementActivity;
+    }
+
+    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback;
     }
 
     @NonNull
@@ -92,10 +94,23 @@ public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.Categ
                                             @Override
                                             public void onError(ANError anError) {
                                                 Toast.makeText(holder.itemView.getContext(), "error", Toast.LENGTH_SHORT).show();
-                                                Log.d("TAG", "onError: " + anError.getErrorDetail());
-                                                Log.d("TAG", "onError: " + anError.getErrorBody());
-                                                Log.d("TAG", "onError: " + anError.getErrorCode());
-                                                Log.d("TAG", "onError: " + anError.getResponse());
+                                                Integer errorCode = anError.getErrorCode();
+
+                                                if (errorCode != 0) {
+                                                    if (errorCode == 401) {
+                                                        SharedPreferences.Editor editor = sp.edit();
+                                                        editor.clear();
+                                                        editor.apply();
+
+                                                        holder.itemView.getContext().startActivity(new Intent(holder.itemView.getContext(), LoginActivity.class));
+                                                    }
+
+                                                    Log.d("TAG", "onError errorCode : " + anError.getErrorCode());
+                                                    Log.d("TAG", "onError errorBody : " + anError.getErrorBody());
+                                                    Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                                                } else {
+                                                    Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                                                }
                                             }
                                         });
                             }
@@ -116,17 +131,18 @@ public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.Categ
         return listCategory.size();
     }
 
+    public interface OnItemClickCallback {
+        void onItemClicked(CategoryModel data);
+    }
+
     public class CategoryViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         Button btnDelete;
+
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_listCategory_list);
             btnDelete = itemView.findViewById(R.id.btn_delete);
         }
-    }
-
-    public interface OnItemClickCallback {
-        void onItemClicked(CategoryModel data);
     }
 }

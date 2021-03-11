@@ -22,11 +22,12 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.pos.minishop.CartActivity;
 import com.pos.minishop.R;
 import com.pos.minishop.adapter.TransAdapter;
 import com.pos.minishop.baseUrl.BaseUrl;
 import com.pos.minishop.model.TransModel;
+import com.pos.minishop.ui.CartActivity;
+import com.pos.minishop.ui.LoginActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,19 +41,18 @@ import static io.realm.Realm.getApplicationContext;
 
 public class TransFragment extends Fragment implements Serializable {
 
+    final static int PRODUCT_REQUEST = 100;
+    final static int PRODUCT_RESULT = 101;
+    private final ArrayList<TransModel> listCart = new ArrayList<>();
     int count;
     Boolean exist = false;
     RecyclerView rvTrans;
-    private ArrayList<TransModel> listCart = new ArrayList<>();
-    private ArrayList<TransModel> productArray;
-    private TransAdapter adapter;
     ProgressDialog progressDialog;
     TextView tvCount;
     ImageView ivC;
     TransFragment context;
-    final static int PRODUCT_REQUEST = 100;
-    final static int PRODUCT_RESULT = 101;
-
+    private ArrayList<TransModel> productArray;
+    private TransAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -162,10 +162,23 @@ public class TransFragment extends Fragment implements Serializable {
                     @Override
                     public void onError(ANError anError) {
                         progressDialog.dismiss();
-                        Log.d("TAG", "onError: " + anError.getErrorDetail());
-                        Log.d("TAG", "onError: " + anError.getErrorBody());
-                        Log.d("TAG", "onError: " + anError.getErrorCode());
-                        Log.d("TAG", "onError: " + anError.getResponse());
+                        Integer errorCode = anError.getErrorCode();
+
+                        if (errorCode != 0) {
+                            if (errorCode == 401) {
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.clear();
+                                editor.apply();
+
+                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            }
+
+                            Log.d("TAG", "onError errorCode : " + anError.getErrorCode());
+                            Log.d("TAG", "onError errorBody : " + anError.getErrorBody());
+                            Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                        } else {
+                            Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                        }
                     }
                 });
     }

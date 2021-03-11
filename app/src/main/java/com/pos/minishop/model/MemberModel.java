@@ -4,6 +4,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class MemberModel implements Parcelable {
+    public static final Creator<MemberModel> CREATOR = new Creator<MemberModel>() {
+        @Override
+        public MemberModel createFromParcel(Parcel in) {
+            return new MemberModel(in);
+        }
+
+        @Override
+        public MemberModel[] newArray(int size) {
+            return new MemberModel[size];
+        }
+    };
     private String id, name, address, gender, date, memberCategoryId;
 
     public MemberModel() {
@@ -18,18 +29,6 @@ public class MemberModel implements Parcelable {
         date = in.readString();
         memberCategoryId = in.readString();
     }
-
-    public static final Creator<MemberModel> CREATOR = new Creator<MemberModel>() {
-        @Override
-        public MemberModel createFromParcel(Parcel in) {
-            return new MemberModel(in);
-        }
-
-        @Override
-        public MemberModel[] newArray(int size) {
-            return new MemberModel[size];
-        }
-    };
 
     public String getId() {
         return id;

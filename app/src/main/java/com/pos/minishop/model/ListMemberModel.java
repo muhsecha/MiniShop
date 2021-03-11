@@ -1,7 +1,7 @@
 package com.pos.minishop.model;
 
 public class ListMemberModel {
-    String nama,alamat,gender,date;
+    String nama, alamat, gender, date;
 
     public String getNama() {
         return nama;

@@ -1,101 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InputProductActivity">
+    tools:context=".ui.InputProductActivity">
 
     <ImageView
         android:id="@+id/iv_imgProduct_input"
-        android:layout_alignParentTop="true"
-        android:background="@mipmap/img"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:onClick="openFileChooser"/>
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:background="@mipmap/img"
+        android:onClick="openFileChooser" />
 
     <TextView
         android:id="@+id/tvtap"
-        android:layout_below="@+id/iv_imgProduct_input"
-        android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tap to pick an image from Camera or Gallery"
-        android:layout_centerHorizontal="true"/>
+        android:layout_below="@+id/iv_imgProduct_input"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="Tap to pick an image from Camera or Gallery" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ti1"
-        android:layout_below="@+id/iv_imgProduct_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_imgProduct_input"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="120dp">
 
         <EditText
             android:id="@+id/et_name_input"
-            android:textColorHint="@color/white"
-            android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#fff"
             android:hint="Product"
-            android:background="#fff"/>
+            android:textColor="@color/black"
+            android:textColorHint="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ti2"
-        android:layout_below="@id/ti1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/ti1"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp">
 
         <EditText
             android:id="@+id/et_price_input"
-            android:textColorHint="@color/white"
-            android:textColor="@color/black"
-            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#fff"
             android:hint="Price"
-            android:background="#fff"/>
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textColorHint="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ti3"
-        android:layout_below="@id/ti2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/ti2"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp">
 
         <EditText
             android:id="@+id/et_stock"
-            android:textColorHint="@color/white"
-            android:textColor="@color/black"
-            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#fff"
             android:hint="Stock"
-            android:background="#fff"/>
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textColorHint="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ti4"
-        android:layout_below="@+id/ti3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/ti3"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp">
 
         <EditText
             android:id="@+id/et_desc_input"
-            android:textColorHint="@color/white"
-            android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#fff"
             android:hint="Desc"
             android:inputType="textLongMessage"
-            android:background="#fff"/>
+            android:textColor="@color/black"
+            android:textColorHint="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Spinner
@@ -103,18 +104,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ti4"
-        android:layout_marginTop="16dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
 
     <Button
         android:id="@+id/btn_inputProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/ti4"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="70dp"
         android:background="@drawable/btn_universal"
-        android:text="Kirim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:text="Kirim" />
 
 </RelativeLayout>

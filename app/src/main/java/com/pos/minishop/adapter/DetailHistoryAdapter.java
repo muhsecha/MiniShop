@@ -51,8 +51,11 @@ public class DetailHistoryAdapter extends RecyclerView.Adapter<DetailHistoryAdap
     }
 
     public class DetailHistoryViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvName, tvQuantity, tvPrice, tvTotalItem;
-        private ImageView ivProduct;
+        private final TextView tvName;
+        private final TextView tvQuantity;
+        private final TextView tvPrice;
+        private final TextView tvTotalItem;
+        private final ImageView ivProduct;
 
         public DetailHistoryViewHolder(@NonNull View itemView) {
             super(itemView);

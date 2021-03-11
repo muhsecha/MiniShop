@@ -1,7 +1,7 @@
 package com.pos.minishop.model;
 
 public class ProductCategoryModel {
-    String id,namaCategory;
+    String id, namaCategory;
 
     public String getId() {
         return id;

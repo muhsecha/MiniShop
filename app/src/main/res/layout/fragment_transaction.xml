@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.transaksi.TransFragment">
 
     <ScrollView
-        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="550dp">
+        android:layout_height="550dp"
+        android:layout_alignParentTop="true">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_cart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/list_sales_transaction"/>
+            tools:listitem="@layout/list_sales_transaction" />
     </ScrollView>
 
     <RelativeLayout
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="25dp"
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp">
+
         <ImageView
             android:id="@+id/iv_count"
-            android:layout_alignParentRight="true"
-            android:layout_toLeftOf="@+id/tv_countItem"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="9dp"
-            android:src="@mipmap/bg_count_image"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="9dp"
+            android:layout_marginRight="25dp"
+            android:layout_toLeftOf="@+id/tv_countItem"
+            android:src="@mipmap/bg_count_image" />
+
         <TextView
             android:id="@+id/tv_countItem"
-            android:text="0"
-            android:textColor="@color/white"
-            android:background="@drawable/background_count_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="30dp"
+            android:background="@drawable/background_count_list"
             android:padding="4dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:text="0"
+            android:textColor="@color/white" />
     </RelativeLayout>
 </RelativeLayout>

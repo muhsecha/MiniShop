@@ -4,6 +4,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class HistoryModel implements Parcelable {
+    public static final Creator<HistoryModel> CREATOR = new Creator<HistoryModel>() {
+        @Override
+        public HistoryModel createFromParcel(Parcel in) {
+            return new HistoryModel(in);
+        }
+
+        @Override
+        public HistoryModel[] newArray(int size) {
+            return new HistoryModel[size];
+        }
+    };
     private String totalBuy, time, date, name, quantity, totalItem, price, trxNumber, image;
 
     public HistoryModel() {
@@ -39,18 +50,6 @@ public class HistoryModel implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<HistoryModel> CREATOR = new Creator<HistoryModel>() {
-        @Override
-        public HistoryModel createFromParcel(Parcel in) {
-            return new HistoryModel(in);
-        }
-
-        @Override
-        public HistoryModel[] newArray(int size) {
-            return new HistoryModel[size];
-        }
-    };
 
     public String getTotalBuy() {
         return totalBuy;

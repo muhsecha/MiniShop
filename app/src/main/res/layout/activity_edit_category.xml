@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditCategoryActivity"
-    android:background="#fff">
+    android:background="#fff"
+    tools:context=".ui.EditCategoryActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ti1"
@@ -17,21 +15,21 @@
 
         <EditText
             android:id="@+id/et_name"
-            android:textColorHint="@color/white"
-            android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#fff"
             android:hint="Name"
-            android:background="#fff"/>
+            android:textColor="@color/black"
+            android:textColorHint="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/ti1"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="70dp"
         android:background="@drawable/btn_universal"
-        android:text="Kirim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:text="Kirim" />
 </RelativeLayout>

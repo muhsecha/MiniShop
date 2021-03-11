@@ -11,11 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.pos.minishop.CategoryManagementActivity;
-import com.pos.minishop.DiscountManagementActivity;
-import com.pos.minishop.HistoryTransActivity;
-import com.pos.minishop.ProductManagementActivity;
 import com.pos.minishop.R;
+import com.pos.minishop.ui.CategoryManagementActivity;
+import com.pos.minishop.ui.DiscountManagementActivity;
+import com.pos.minishop.ui.HistoryTransActivity;
+import com.pos.minishop.ui.ProductManagementActivity;
 
 public class HomeFragment extends Fragment {
 

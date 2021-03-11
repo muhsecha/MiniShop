@@ -4,17 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class CategoryModel implements Parcelable {
-    private String id, name;
-
-    public CategoryModel() {
-
-    }
-
-    protected CategoryModel(Parcel in) {
-        id = in.readString();
-        name = in.readString();
-    }
-
     public static final Creator<CategoryModel> CREATOR = new Creator<CategoryModel>() {
         @Override
         public CategoryModel createFromParcel(Parcel in) {
@@ -26,6 +15,16 @@ public class CategoryModel implements Parcelable {
             return new CategoryModel[size];
         }
     };
+    private String id, name;
+
+    public CategoryModel() {
+
+    }
+
+    protected CategoryModel(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+    }
 
     public String getId() {
         return id;

@@ -5,49 +5,49 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ti1"
-        android:layout_below="@+id/iv_imgProduct_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_imgProduct_input"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="120dp">
 
         <EditText
             android:id="@+id/et_name"
-            android:textColorHint="@color/white"
-            android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#fff"
             android:hint="Name"
-            android:background="#fff"/>
+            android:textColor="@color/black"
+            android:textColorHint="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ti2"
-        android:layout_below="@id/ti1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/ti1"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp">
 
         <EditText
             android:id="@+id/et_discount"
-            android:textColorHint="@color/white"
-            android:textColor="@color/black"
-            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#fff"
             android:hint="Value"
-            android:background="#fff"/>
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textColorHint="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/ti2"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="70dp"
         android:background="@drawable/btn_universal"
-        android:text="Submit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:text="Submit" />
 
 </RelativeLayout>

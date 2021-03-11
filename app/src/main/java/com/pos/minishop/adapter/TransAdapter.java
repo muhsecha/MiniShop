@@ -1,8 +1,6 @@
 package com.pos.minishop.adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,28 +18,20 @@ import com.pos.minishop.model.TransModel;
 
 import java.util.ArrayList;
 
-import static android.content.Context.MODE_PRIVATE;
-
-public class TransAdapter extends RecyclerView.Adapter<TransAdapter.TransViewHolder>{
+public class TransAdapter extends RecyclerView.Adapter<TransAdapter.TransViewHolder> {
 
     static ArrayList<TransModel> listTrans;
     OnItemClickListener mListener;
     Context mContext;
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
+    public TransAdapter(Context mContext, ArrayList<TransModel> listTrans) {
+        this.mContext = mContext;
+        TransAdapter.listTrans = listTrans;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
-
-
-    public TransAdapter(Context mContext, ArrayList<TransModel> listTrans) {
-        this.mContext = mContext;
-        this.listTrans = listTrans;
-    }
-
 
     @NonNull
     @Override
@@ -69,35 +59,40 @@ public class TransAdapter extends RecyclerView.Adapter<TransAdapter.TransViewHol
         return listTrans.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
     public static class TransViewHolder extends RecyclerView.ViewHolder {
         int counter;
         ImageView ivCart;
-        TextView tvProduct,tvStock,tvprice,tvcount;
+        TextView tvProduct, tvStock, tvprice, tvcount;
         RelativeLayout relativeLayout;
+
         public TransViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            ivCart =  itemView.findViewById(R.id.iv_sales_transaction);
-            tvProduct =  itemView.findViewById(R.id.tv_nameProduct_transaction);
-            tvStock =  itemView.findViewById(R.id.tv_stock_transaction);
-            tvprice =  itemView.findViewById(R.id.tv_sellPrice_transaction);
-            tvcount =  itemView.findViewById(R.id.tv_countTransaction);
+            ivCart = itemView.findViewById(R.id.iv_sales_transaction);
+            tvProduct = itemView.findViewById(R.id.tv_nameProduct_transaction);
+            tvStock = itemView.findViewById(R.id.tv_stock_transaction);
+            tvprice = itemView.findViewById(R.id.tv_sellPrice_transaction);
+            tvcount = itemView.findViewById(R.id.tv_countTransaction);
             relativeLayout = itemView.findViewById(R.id.rl_sales_transaction);
 
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (listener != null){
+                    if (listener != null) {
                         int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
+                        if (position != RecyclerView.NO_POSITION) {
                             listener.onItemClick(position);
                             String stockNow = listTrans.get(position).getStock();
-                            if(Integer.parseInt(stockNow) > 0) {
-                                if(tvcount.getVisibility() != View.VISIBLE) {
+                            if (Integer.parseInt(stockNow) > 0) {
+                                if (tvcount.getVisibility() != View.VISIBLE) {
                                     tvcount.setVisibility(View.VISIBLE);
                                 }
                                 counter++;
                                 listTrans.get(position).setAmount(counter);
-                                listTrans.get(position).setStock(String.valueOf(Integer.parseInt(stockNow)-1));
+                                listTrans.get(position).setStock(String.valueOf(Integer.parseInt(stockNow) - 1));
                                 stockNow = listTrans.get(position).getStock();
                                 tvcount.setText("" + counter);
                                 tvStock.setText(stockNow);

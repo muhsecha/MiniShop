@@ -10,20 +10,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pos.minishop.R;
 import com.pos.minishop.model.MemberModel;
-import com.pos.minishop.model.ProductModel;
 
 import java.util.ArrayList;
 
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberViewHolder> {
-    private ArrayList<MemberModel> listMember;
+    private final ArrayList<MemberModel> listMember;
     private OnItemClickCallback onItemClickCallback;
-
-    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback;
-    }
 
     public MemberAdapter(ArrayList<MemberModel> listMember) {
         this.listMember = listMember;
+    }
+
+    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback;
     }
 
     @NonNull
@@ -54,6 +53,10 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
         return listMember.size();
     }
 
+    public interface OnItemClickCallback {
+        void onItemClicked(MemberModel data);
+    }
+
     public class MemberViewHolder extends RecyclerView.ViewHolder {
         TextView nama, address, gender, date;
 
@@ -64,9 +67,5 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
             gender = itemView.findViewById(R.id.tv_gender_member);
             date = itemView.findViewById(R.id.tv_date_member);
         }
-    }
-
-    public interface OnItemClickCallback {
-        void onItemClicked(MemberModel data);
     }
 }

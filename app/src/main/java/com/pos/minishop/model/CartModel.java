@@ -1,7 +1,7 @@
 package com.pos.minishop.model;
 
 public class CartModel {
-    String cartname,cartstock,cartprice;
+    String cartname, cartstock, cartprice;
 
     public String getCartname() {
         return cartname;

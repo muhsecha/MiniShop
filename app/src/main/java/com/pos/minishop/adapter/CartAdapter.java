@@ -1,8 +1,6 @@
 package com.pos.minishop.adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,28 +18,20 @@ import com.pos.minishop.model.TransModel;
 
 import java.util.ArrayList;
 
-import static android.content.Context.MODE_PRIVATE;
-
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder>{
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
     static ArrayList<TransModel> listTrans;
     OnItemClickListener mListener;
     Context mContext;
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
+    public CartAdapter(Context mContext, ArrayList<TransModel> listTrans) {
+        this.mContext = mContext;
+        CartAdapter.listTrans = listTrans;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
-
-
-    public CartAdapter(Context mContext, ArrayList<TransModel> listTrans) {
-        this.mContext = mContext;
-        this.listTrans = listTrans;
-    }
-
 
     @NonNull
     @Override
@@ -69,24 +59,29 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         return listTrans.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
     public static class CartViewHolder extends RecyclerView.ViewHolder {
         ImageView ivCart;
-        TextView tvProduct,tvStock,tvprice;
+        TextView tvProduct, tvStock, tvprice;
         RelativeLayout relativeLayout;
+
         public CartViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            ivCart =  itemView.findViewById(R.id.iv_cart_list);
-            tvProduct =  itemView.findViewById(R.id.tv_cart_name);
-            tvprice =  itemView.findViewById(R.id.tv_cart_price);
-            tvStock =  itemView.findViewById(R.id.tv_cart_stock);
+            ivCart = itemView.findViewById(R.id.iv_cart_list);
+            tvProduct = itemView.findViewById(R.id.tv_cart_name);
+            tvprice = itemView.findViewById(R.id.tv_cart_price);
+            tvStock = itemView.findViewById(R.id.tv_cart_stock);
             relativeLayout = itemView.findViewById(R.id.rl_cart);
 
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (listener != null){
+                    if (listener != null) {
                         int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
+                        if (position != RecyclerView.NO_POSITION) {
                             listener.onItemClick(position);
                         }
                     }

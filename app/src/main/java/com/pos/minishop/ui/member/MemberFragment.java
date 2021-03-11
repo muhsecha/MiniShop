@@ -1,9 +1,13 @@
 package com.pos.minishop.ui.member;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,51 +15,31 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.pos.minishop.CreateMemberActivity;
-import com.pos.minishop.EditMemberActivity;
-import com.pos.minishop.EditProductActivity;
-import com.pos.minishop.InputProductActivity;
-import com.pos.minishop.MainActivity;
 import com.pos.minishop.R;
 import com.pos.minishop.adapter.MemberAdapter;
 import com.pos.minishop.baseUrl.BaseUrl;
-import com.pos.minishop.model.MemberCategoryModel;
 import com.pos.minishop.model.MemberModel;
-import com.pos.minishop.model.ProductModel;
+import com.pos.minishop.ui.CreateMemberActivity;
+import com.pos.minishop.ui.EditMemberActivity;
+import com.pos.minishop.ui.LoginActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
 
 import static android.content.Context.MODE_PRIVATE;
 
 
 public class MemberFragment extends Fragment {
+    private final ArrayList<MemberModel> listMember = new ArrayList<>();
     private Button btnAdd;
     private RecyclerView rvMember;
-    private ArrayList<MemberModel> listMember = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -136,10 +120,23 @@ public class MemberFragment extends Fragment {
 
                     @Override
                     public void onError(ANError anError) {
-                        Log.d("TAG", "onError: " + anError.getErrorDetail());
-                        Log.d("TAG", "onError: " + anError.getErrorBody());
-                        Log.d("TAG", "onError: " + anError.getErrorCode());
-                        Log.d("TAG", "onError: " + anError.getResponse());
+                        Integer errorCode = anError.getErrorCode();
+
+                        if (errorCode != 0) {
+                            if (errorCode == 401) {
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.clear();
+                                editor.apply();
+
+                                startActivity(new Intent(getContext(), LoginActivity.class));
+                            }
+
+                            Log.d("TAG", "onError errorCode : " + anError.getErrorCode());
+                            Log.d("TAG", "onError errorBody : " + anError.getErrorBody());
+                            Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                        } else {
+                            Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                        }
                     }
                 });
     }

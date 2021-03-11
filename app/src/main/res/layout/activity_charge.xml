@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChargeActivity">
+    tools:context=".ui.ChargeActivity">
+
     <TextView
         android:id="@+id/tv3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="Total Bayar : "
-        android:textStyle="bold"
-        android:textSize="16sp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:textColor="@color/black"/>
+        android:text="Total Bayar : "
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_bayar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/tv3"
         android:text="Rp. "
-        android:textSize="16sp"
         android:textColor="@color/purple_dark"
-        android:layout_marginTop="10dp"/>
+        android:textSize="16sp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ti4"
-        android:layout_below="@+id/ti3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/ti3"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="60dp">
 
         <EditText
             android:id="@+id/et_charge"
-            android:textColorHint="@color/white"
-            android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#fff"
             android:hint="Charge"
             android:inputType="number"
-            android:background="#fff"/>
+            android:textColor="@color/black"
+            android:textColorHint="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_submit_charge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/ti4"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="70dp"
         android:background="@drawable/btn_universal"
-        android:text="Kirim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:text="Kirim" />
 
 </RelativeLayout>

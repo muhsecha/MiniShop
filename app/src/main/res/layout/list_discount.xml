@@ -1,61 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true">
 
         <ImageView
             android:id="@+id/iv_discount_list"
-            android:src="@mipmap/tagpurple"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/bg_image_discount"
             android:layout_marginVertical="25dp"
             android:layout_marginLeft="25dp"
+            android:background="@drawable/bg_image_discount"
             android:padding="10dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"/>
+            android:src="@mipmap/tagpurple" />
 
         <TextView
             android:id="@+id/tv_discountName_list"
-            android:layout_toRightOf="@+id/iv_discount_list"
-            android:layout_marginLeft="20dp"
-            android:layout_centerVertical="true"
-            android:text="Discount"
-            android:textColor="@color/black"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/iv_discount_list"
+            android:text="Discount"
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/tv_percenDisc_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:text="10 %"
             android:layout_toLeftOf="@id/btn_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:text="10 %" />
 
         <Button
             android:id="@+id/btn_delete"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:layout_centerVertical="true"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:background="@mipmap/delete"/>
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@mipmap/delete" />
 
         <View
-            android:layout_below="@+id/tv_discountName_list"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tv_discountName_list"
             android:layout_marginLeft="95dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="60dp"
-            android:background="@color/purple_light"/>
+            android:background="@color/purple_light" />
     </RelativeLayout>
 
 </RelativeLayout>

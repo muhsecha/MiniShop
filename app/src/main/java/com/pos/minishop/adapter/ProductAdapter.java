@@ -10,24 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.pos.minishop.CategoryManagementActivity;
 import com.pos.minishop.R;
 import com.pos.minishop.baseUrl.BaseUrl;
-import com.pos.minishop.model.CategoryModel;
 import com.pos.minishop.model.ProductModel;
 
 import java.util.ArrayList;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder>{
-    private ArrayList<ProductModel> listProduct;
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+    private final ArrayList<ProductModel> listProduct;
     private OnItemClickCallback onItemClickCallback;
-
-    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback;
-    }
 
     public ProductAdapter(ArrayList<ProductModel> listProduct) {
         this.listProduct = listProduct;
+    }
+
+    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback;
     }
 
     @NonNull
@@ -63,6 +61,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return listProduct.size();
     }
 
+    public interface OnItemClickCallback {
+        void onItemClicked(ProductModel data);
+    }
+
     public class ProductViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView name, price, stock;
@@ -74,9 +76,5 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             price = itemView.findViewById(R.id.tv_realPrice_list);
             stock = itemView.findViewById(R.id.tv_countProduct_list);
         }
-    }
-
-    public interface OnItemClickCallback {
-        void onItemClicked(ProductModel data);
     }
 }

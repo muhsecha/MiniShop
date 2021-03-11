@@ -1,6 +1,4 @@
-package com.pos.minishop;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.pos.minishop.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,7 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.pos.minishop.ui.transaksi.TransFragment;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.pos.minishop.R;
 
 public class ResultActivity extends AppCompatActivity {
     TextView tvHasil;
@@ -26,7 +26,7 @@ public class ResultActivity extends AppCompatActivity {
         int result = mResult.getInt("hasil", 0);
         SharedPreferences.Editor editor = mResult.edit();
         editor.clear();
-        tvHasil.setText("Rp. "+result);
+        tvHasil.setText("Rp. " + result);
 
         btnNew.setOnClickListener(new View.OnClickListener() {
             @Override

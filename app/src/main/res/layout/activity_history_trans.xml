@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HistoryTransActivity">
+    tools:context=".ui.HistoryTransActivity">
 
     <TextView
         android:id="@+id/tv5"

@@ -1,7 +1,7 @@
 package com.pos.minishop.model;
 
 public class RealmModel {
-    String id,harga,total;
+    String id, harga, total;
 
     public String getId() {
         return id;

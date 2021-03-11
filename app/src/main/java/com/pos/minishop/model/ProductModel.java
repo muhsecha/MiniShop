@@ -4,6 +4,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class ProductModel implements Parcelable {
+    public static final Creator<ProductModel> CREATOR = new Creator<ProductModel>() {
+        @Override
+        public ProductModel createFromParcel(Parcel in) {
+            return new ProductModel(in);
+        }
+
+        @Override
+        public ProductModel[] newArray(int size) {
+            return new ProductModel[size];
+        }
+    };
     private String id, productCategoryId, name, price, stock, image, desc;
 
     public ProductModel() {
@@ -35,18 +46,6 @@ public class ProductModel implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<ProductModel> CREATOR = new Creator<ProductModel>() {
-        @Override
-        public ProductModel createFromParcel(Parcel in) {
-            return new ProductModel(in);
-        }
-
-        @Override
-        public ProductModel[] newArray(int size) {
-            return new ProductModel[size];
-        }
-    };
 
     public String getId() {
         return id;

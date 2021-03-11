@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pos.minishop.R;
 import com.pos.minishop.model.HistoryModel;
-import com.pos.minishop.model.ProductModel;
 
 import java.util.ArrayList;
 
@@ -18,12 +17,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     private ArrayList<HistoryModel> listHistory = new ArrayList<>();
     private OnItemClickCallback onItemClickCallback;
 
-    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback;
-    }
-
     public HistoryAdapter(ArrayList<HistoryModel> listHistory) {
         this.listHistory = listHistory;
+    }
+
+    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback;
     }
 
     @NonNull
@@ -54,8 +53,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         return listHistory.size();
     }
 
+    public interface OnItemClickCallback {
+        void onItemClicked(HistoryModel data);
+    }
+
     public class HistoryViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTotalBuy, tvDate, tvTime, tvTrxNumber;
+        private final TextView tvTotalBuy;
+        private final TextView tvDate;
+        private final TextView tvTime;
+        private final TextView tvTrxNumber;
 
         public HistoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,9 +70,5 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             tvTime = itemView.findViewById(R.id.tv_time_listTrans);
             tvTrxNumber = itemView.findViewById(R.id.tv_trx_number);
         }
-    }
-
-    public interface OnItemClickCallback {
-        void onItemClicked(HistoryModel data);
     }
 }

@@ -4,39 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProductManagementActivity">
+    tools:context=".ui.ProductManagementActivity">
 
     <ScrollView
         android:id="@+id/sv_list"
-        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="600dp">
+        android:layout_height="600dp"
+        android:layout_alignParentTop="true">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_product"
-                android:theme="@style/ThemeOverlay.AppCompat.Light"
-                android:background="@color/white"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="20dp"
-                tools:listitem="@layout/list_product"
-                android:layout_marginHorizontal="5dp">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:background="@color/white"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:listitem="@layout/list_product"></androidx.recyclerview.widget.RecyclerView>
         </RelativeLayout>
     </ScrollView>
 
     <Button
         android:id="@+id/btn_addProduct_home"
-        android:background="@mipmap/add"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="25dp"
-        android:layout_marginRight="25dp"
         android:layout_width="50dp"
-        android:layout_height="50dp"/>
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="25dp"
+        android:background="@mipmap/add" />
 
 </RelativeLayout>

@@ -1,18 +1,18 @@
-package com.pos.minishop;
+package com.pos.minishop.ui;
+
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-
+import com.pos.minishop.R;
 import com.pos.minishop.model.ListMemberModel;
-import com.pos.minishop.model.ProductModel;
 
 import java.util.ArrayList;
 
 public class ListMemberActivity extends AppCompatActivity {
+    private final ArrayList<ListMemberModel> listMember = new ArrayList<>();
     private RecyclerView rvlistmember;
-    private ArrayList<ListMemberModel> listMember = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

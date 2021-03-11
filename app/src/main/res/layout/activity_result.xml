@@ -1,62 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ResultActivity">
+    tools:context=".ui.ResultActivity">
+
     <ImageView
         android:id="@+id/iv1"
-        android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"
-        android:src="@mipmap/checked"
         android:layout_width="80dp"
-        android:layout_height="80dp"/>
-    <TextView
-        android:layout_below="@+id/iv1"
-        android:id="@+id/tv1"
-        android:layout_marginTop="20dp"
+        android:layout_height="80dp"
         android:layout_centerHorizontal="true"
-        android:text="EXCELENT"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_marginTop="50dp"
+        android:src="@mipmap/checked" />
+
     <TextView
-        android:layout_below="@+id/tv1"
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="EXCELENT"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <TextView
         android:id="@+id/tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv1"
         android:layout_centerHorizontal="true"
         android:text="Transaction Success"
-        android:textSize="20dp"
         android:textColor="@color/purple_dark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:textSize="20dp" />
+
     <TextView
         android:id="@+id/tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tv2"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="50dp"
-        android:text="Kembalian : "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:text="Kembalian : " />
+
     <TextView
         android:id="@+id/tv_hasilKembalian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tv2"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="25dp"
         android:layout_marginTop="50dp"
-        android:text="Rp. "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_marginRight="25dp"
+        android:text="Rp. " />
 
     <Button
-        android:layout_below="@+id/tv_hasilKembalian"
         android:id="@+id/btn_newTransaction"
-        android:layout_marginTop="15dp"
-        android:layout_marginHorizontal="25dp"
-        android:text="new transaction"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_hasilKembalian"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="15dp"
+        android:text="new transaction" />
 
 </RelativeLayout>
