@@ -1,9 +1,11 @@
 package com.pos.minishop.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 public class HistoryTransActivity extends AppCompatActivity {
     private final ArrayList<HistoryModel> listHistory = new ArrayList<>();
     private RecyclerView rvHistory;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,9 @@ public class HistoryTransActivity extends AppCompatActivity {
 
         rvHistory = findViewById(R.id.rv_history);
 
+        progressDialog = new ProgressDialog(this);
         rvHistory.setHasFixedSize(true);
+        showHistory();
         getHistory();
     }
 
@@ -55,6 +60,9 @@ public class HistoryTransActivity extends AppCompatActivity {
     }
 
     public void getHistory() {
+        progressDialog.setTitle("Loading...");
+        progressDialog.show();
+
         SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
         String token = sp.getString("logged", "missing");
 
@@ -69,6 +77,7 @@ public class HistoryTransActivity extends AppCompatActivity {
                             String status = response.getString("status");
 
                             if (status.equals("success")) {
+                                progressDialog.dismiss();
                                 JSONArray data = response.getJSONArray("data");
 
                                 String trxNumber = null;
@@ -92,6 +101,9 @@ public class HistoryTransActivity extends AppCompatActivity {
                                 }
 
                                 showHistory();
+                            } else {
+                                progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -100,6 +112,8 @@ public class HistoryTransActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(ANError anError) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                         Integer errorCode = anError.getErrorCode();
 
                         if (errorCode != 0) {

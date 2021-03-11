@@ -1,5 +1,6 @@
 package com.pos.minishop.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ public class ChargeActivity extends AppCompatActivity {
     private Bundle bundle;
     private ArrayList<TransModel> productArray;
     private String idDiscount = null, idMember = null;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +48,7 @@ public class ChargeActivity extends AppCompatActivity {
         bayar = findViewById(R.id.tv_bayar);
         btnSubmit = findViewById(R.id.btn_submit_charge);
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                validate();
-            }
-        });
-
+        progressDialog = new ProgressDialog(this);
         bundle = getIntent().getExtras();
 
         if (bundle != null) {
@@ -68,6 +64,13 @@ public class ChargeActivity extends AppCompatActivity {
             bayar.setText("Rp. " + finalPrice);
             etCharge.setText("" + finalPrice);
         }
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validate();
+            }
+        });
     }
 
     private void validate() {
@@ -119,6 +122,9 @@ public class ChargeActivity extends AppCompatActivity {
                 transaction.put("transaction", transactionArray);
                 Log.d("SOY", transaction.toString());
 
+                progressDialog.setTitle("Loading...");
+                progressDialog.show();
+
                 AndroidNetworking.post(BaseUrl.url + "api/transactions")
                         .addHeaders("Authorization", "Bearer " + token)
                         .addBodyParameter("member_id", idMember)
@@ -134,8 +140,13 @@ public class ChargeActivity extends AppCompatActivity {
                                     String status = response.getString("status");
                                     Log.d("hasil", "onResponse: " + status);
                                     Toast.makeText(ChargeActivity.this, status, Toast.LENGTH_SHORT).show();
-                                    if (status.equalsIgnoreCase("success"))
+                                    if (status.equalsIgnoreCase("success")) {
+                                        progressDialog.dismiss();
                                         startActivity(new Intent(getApplicationContext(), ResultActivity.class));
+                                    } else {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
+                                    }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -143,6 +154,7 @@ public class ChargeActivity extends AppCompatActivity {
 
                             @Override
                             public void onError(ANError anError) {
+                                progressDialog.dismiss();
                                 Toast.makeText(getApplicationContext(), "error toast", Toast.LENGTH_LONG).show();
                                 Integer errorCode = anError.getErrorCode();
 

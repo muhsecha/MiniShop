@@ -63,58 +63,7 @@ public class DiscountAdapter extends RecyclerView.Adapter<DiscountAdapter.Discou
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(holder.itemView.getContext())
-                        .setMessage("Delete ?")
-                        .setNegativeButton("No", null)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                SharedPreferences sp = holder.itemView.getContext().getSharedPreferences("login", MODE_PRIVATE);
-                                String token = sp.getString("logged", "missing");
-
-                                AndroidNetworking.delete(BaseUrl.url + "api/discounts/" + discountModel.getId())
-                                        .addHeaders("Authorization", "Bearer " + token)
-                                        .setPriority(Priority.MEDIUM)
-                                        .build()
-                                        .getAsJSONObject(new JSONObjectRequestListener() {
-                                            @Override
-                                            public void onResponse(JSONObject response) {
-                                                try {
-                                                    String status = response.getString("status");
-                                                    String message = response.getString("message");
-
-                                                    if (status.equals("success")) {
-                                                        Toast.makeText(holder.itemView.getContext(), message, Toast.LENGTH_SHORT).show();
-                                                        discountManagementActivity.getDiscounts();
-                                                    }
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onError(ANError anError) {
-                                                Toast.makeText(holder.itemView.getContext(), "error", Toast.LENGTH_SHORT).show();
-                                                Integer errorCode = anError.getErrorCode();
-
-                                                if (errorCode != 0) {
-                                                    if (errorCode == 401) {
-                                                        SharedPreferences.Editor editor = sp.edit();
-                                                        editor.clear();
-                                                        editor.apply();
-
-                                                        holder.itemView.getContext().startActivity(new Intent(holder.itemView.getContext(), LoginActivity.class));
-                                                    }
-
-                                                    Log.d("TAG", "onError errorCode : " + anError.getErrorCode());
-                                                    Log.d("TAG", "onError errorBody : " + anError.getErrorBody());
-                                                    Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
-                                                } else {
-                                                    Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
-                                                }
-                                            }
-                                        });
-                            }
-                        }).create().show();
+                discountManagementActivity.deleteDiscount(discountModel.getId());
             }
         });
 

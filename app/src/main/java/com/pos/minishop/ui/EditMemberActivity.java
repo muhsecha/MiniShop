@@ -1,6 +1,7 @@
 package com.pos.minishop.ui;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ public class EditMemberActivity extends AppCompatActivity implements AdapterView
     private EditText etFullName, etGender, etAddress, etDate;
     private Spinner spinnerMemberCategory;
     private String idMemberCategory;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class EditMemberActivity extends AppCompatActivity implements AdapterView
         etDate = findViewById(R.id.et_datePicker);
         spinnerMemberCategory = findViewById(R.id.spinner_member_category);
 
+        progressDialog = new ProgressDialog(this);
         Intent intent = getIntent();
         MemberModel item = intent.getParcelableExtra("Item Data");
         idMemberCategory = item.getMemberCategoryId();
@@ -124,6 +127,9 @@ public class EditMemberActivity extends AppCompatActivity implements AdapterView
                 }
 
                 if (!isEmpty) {
+                    progressDialog.setTitle("Loading...");
+                    progressDialog.show();
+
                     SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
                     String token = sp.getString("logged", "missing");
 
@@ -144,12 +150,14 @@ public class EditMemberActivity extends AppCompatActivity implements AdapterView
                                         String message = response.getString("message");
 
                                         if (status.equals("success")) {
+                                            progressDialog.dismiss();
                                             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                             startActivity(intent);
                                             finish();
                                         } else {
-                                            Toast.makeText(getApplicationContext(), "gagal", Toast.LENGTH_SHORT).show();
+                                            progressDialog.dismiss();
+                                            Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -158,6 +166,8 @@ public class EditMemberActivity extends AppCompatActivity implements AdapterView
 
                                 @Override
                                 public void onError(ANError anError) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                                     Integer errorCode = anError.getErrorCode();
 
                                     if (errorCode != 0) {
@@ -204,6 +214,9 @@ public class EditMemberActivity extends AppCompatActivity implements AdapterView
     }
 
     public void getMemberCategories() {
+        progressDialog.setTitle("Loading...");
+        progressDialog.show();
+
         SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
         String token = sp.getString("logged", "missing");
 
@@ -218,6 +231,7 @@ public class EditMemberActivity extends AppCompatActivity implements AdapterView
                             String status = response.getString("status");
 
                             if (status.equals("success")) {
+                                progressDialog.dismiss();
                                 JSONArray data = response.getJSONArray("data");
 
                                 for (int i = 0; i < data.length(); i++) {
@@ -238,6 +252,9 @@ public class EditMemberActivity extends AppCompatActivity implements AdapterView
                                         }
                                     }
                                 }
+                            } else {
+                                progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -247,6 +264,8 @@ public class EditMemberActivity extends AppCompatActivity implements AdapterView
 
                     @Override
                     public void onError(ANError anError) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                         Integer errorCode = anError.getErrorCode();
 
                         if (errorCode != 0) {

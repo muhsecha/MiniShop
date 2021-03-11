@@ -1,6 +1,7 @@
 package com.pos.minishop.ui;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ public class CreateMemberActivity extends AppCompatActivity implements AdapterVi
     private EditText etFullName, etGender, etAddress, etDate;
     private Spinner spinnerMemberCategory;
     private String idMemberCategory;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,10 @@ public class CreateMemberActivity extends AppCompatActivity implements AdapterVi
         etDate = findViewById(R.id.et_datePicker);
         spinnerMemberCategory = findViewById(R.id.spinner_member_category);
 
+        progressDialog = new ProgressDialog(this);
         myCalendar = Calendar.getInstance();
+        getMemberCategories();
+
         date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -115,6 +120,9 @@ public class CreateMemberActivity extends AppCompatActivity implements AdapterVi
                 }
 
                 if (!isEmpty) {
+                    progressDialog.setTitle("Loading...");
+                    progressDialog.show();
+
                     SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
                     String token = sp.getString("logged", "missing");
 
@@ -135,12 +143,14 @@ public class CreateMemberActivity extends AppCompatActivity implements AdapterVi
                                         String message = response.getString("message");
 
                                         if (status.equals("success")) {
+                                            progressDialog.dismiss();
                                             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                             startActivity(intent);
                                             finish();
                                         } else {
-                                            Toast.makeText(getApplicationContext(), "gagal", Toast.LENGTH_SHORT).show();
+                                            progressDialog.dismiss();
+                                            Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -149,6 +159,8 @@ public class CreateMemberActivity extends AppCompatActivity implements AdapterVi
 
                                 @Override
                                 public void onError(ANError anError) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                                     Integer errorCode = anError.getErrorCode();
 
                                     if (errorCode != 0) {
@@ -171,8 +183,6 @@ public class CreateMemberActivity extends AppCompatActivity implements AdapterVi
                 }
             }
         });
-
-        getMemberCategories();
     }
 
     public void showMemberCategory() {
@@ -195,6 +205,9 @@ public class CreateMemberActivity extends AppCompatActivity implements AdapterVi
     }
 
     public void getMemberCategories() {
+        progressDialog.setTitle("Loading...");
+        progressDialog.show();
+
         SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
         String token = sp.getString("logged", "missing");
 
@@ -209,6 +222,7 @@ public class CreateMemberActivity extends AppCompatActivity implements AdapterVi
                             String status = response.getString("status");
 
                             if (status.equals("success")) {
+                                progressDialog.dismiss();
                                 JSONArray data = response.getJSONArray("data");
 
                                 for (int i = 0; i < data.length(); i++) {
@@ -221,6 +235,9 @@ public class CreateMemberActivity extends AppCompatActivity implements AdapterVi
                                 }
 
                                 showMemberCategory();
+                            } else {
+                                progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -230,6 +247,8 @@ public class CreateMemberActivity extends AppCompatActivity implements AdapterVi
 
                     @Override
                     public void onError(ANError anError) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                         Integer errorCode = anError.getErrorCode();
 
                         if (errorCode != 0) {

@@ -1,11 +1,15 @@
 package com.pos.minishop.ui;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +34,8 @@ public class DiscountManagementActivity extends AppCompatActivity {
     private final ArrayList<DiscountModel> listDiscount = new ArrayList<>();
     private RecyclerView rvDiscount;
     private FloatingActionButton btnAddDiscount;
+    private DiscountAdapter discountAdapter;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +45,9 @@ public class DiscountManagementActivity extends AppCompatActivity {
         rvDiscount = findViewById(R.id.rv_discount);
         btnAddDiscount = findViewById(R.id.btn_add_discount);
 
+        progressDialog = new ProgressDialog(this);
         rvDiscount.setHasFixedSize(true);
+        showDiscounts();
         getDiscounts();
 
         btnAddDiscount.setOnClickListener(new View.OnClickListener() {
@@ -50,9 +58,9 @@ public class DiscountManagementActivity extends AppCompatActivity {
         });
     }
 
-    public void showProducts() {
+    public void showDiscounts() {
         rvDiscount.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        DiscountAdapter discountAdapter = new DiscountAdapter(listDiscount, DiscountManagementActivity.this);
+        discountAdapter = new DiscountAdapter(listDiscount, DiscountManagementActivity.this);
         rvDiscount.setAdapter(discountAdapter);
 
         discountAdapter.setOnItemClickCallback(new DiscountAdapter.OnItemClickCallback() {
@@ -66,6 +74,9 @@ public class DiscountManagementActivity extends AppCompatActivity {
     }
 
     public void getDiscounts() {
+        progressDialog.setTitle("Loading...");
+        progressDialog.show();
+
         SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
         String token = sp.getString("logged", "missing");
 
@@ -80,6 +91,7 @@ public class DiscountManagementActivity extends AppCompatActivity {
                             String status = response.getString("status");
 
                             if (status.equals("success")) {
+                                progressDialog.dismiss();
                                 listDiscount.clear();
                                 JSONArray data = response.getJSONArray("data");
 
@@ -93,7 +105,10 @@ public class DiscountManagementActivity extends AppCompatActivity {
                                     listDiscount.add(discount);
                                 }
 
-                                showProducts();
+                                discountAdapter.notifyDataSetChanged();
+                            } else {
+                                progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -102,6 +117,8 @@ public class DiscountManagementActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(ANError anError) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                         Integer errorCode = anError.getErrorCode();
 
                         if (errorCode != 0) {
@@ -121,5 +138,68 @@ public class DiscountManagementActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void deleteDiscount(String id) {
+        new AlertDialog.Builder(this)
+                .setMessage("Delete ?")
+                .setNegativeButton("No", null)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        progressDialog.setTitle("Loading...");
+                        progressDialog.show();
+
+                        SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
+                        String token = sp.getString("logged", "missing");
+
+                        AndroidNetworking.delete(BaseUrl.url + "api/discounts/" + id)
+                                .addHeaders("Authorization", "Bearer " + token)
+                                .setPriority(Priority.MEDIUM)
+                                .build()
+                                .getAsJSONObject(new JSONObjectRequestListener() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        try {
+                                            String status = response.getString("status");
+                                            String message = response.getString("message");
+
+                                            if (status.equals("success")) {
+                                                progressDialog.dismiss();
+                                                Toast.makeText(getApplication(), message, Toast.LENGTH_SHORT).show();
+                                                getDiscounts();
+                                            } else {
+                                                progressDialog.dismiss();
+                                                Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(ANError anError) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(getApplication(), "error", Toast.LENGTH_SHORT).show();
+                                        Integer errorCode = anError.getErrorCode();
+
+                                        if (errorCode != 0) {
+                                            if (errorCode == 401) {
+                                                SharedPreferences.Editor editor = sp.edit();
+                                                editor.clear();
+                                                editor.apply();
+
+                                                startActivity(new Intent(getApplication(), LoginActivity.class));
+                                            }
+
+                                            Log.d("TAG", "onError errorCode : " + anError.getErrorCode());
+                                            Log.d("TAG", "onError errorBody : " + anError.getErrorBody());
+                                            Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                                        } else {
+                                            Log.d("TAG", "onError errorDetail : " + anError.getErrorDetail());
+                                        }
+                                    }
+                                });
+                    }
+                }).create().show();
     }
 }

@@ -1,5 +1,6 @@
 package com.pos.minishop.ui.member;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +42,8 @@ public class MemberFragment extends Fragment {
     private final ArrayList<MemberModel> listMember = new ArrayList<>();
     private Button btnAdd;
     private RecyclerView rvMember;
+    private MemberAdapter memberAdapter;
+    private ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,15 +51,17 @@ public class MemberFragment extends Fragment {
         btnAdd = root.findViewById(R.id.btn_add);
         rvMember = root.findViewById(R.id.rv_member);
 
+        progressDialog = new ProgressDialog(getContext());
+        rvMember.setHasFixedSize(true);
+        showMembers();
+        getMembers();
+
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), CreateMemberActivity.class));
             }
         });
-
-        rvMember.setHasFixedSize(true);
-        getMembers();
 
         return root;
     }
@@ -68,7 +74,7 @@ public class MemberFragment extends Fragment {
 
     public void showMembers() {
         rvMember.setLayoutManager(new LinearLayoutManager(getContext()));
-        MemberAdapter memberAdapter = new MemberAdapter(listMember);
+        memberAdapter = new MemberAdapter(listMember);
         rvMember.setAdapter(memberAdapter);
 
         memberAdapter.setOnItemClickCallback(new MemberAdapter.OnItemClickCallback() {
@@ -82,6 +88,9 @@ public class MemberFragment extends Fragment {
     }
 
     public void getMembers() {
+        progressDialog.setTitle("Loading...");
+        progressDialog.show();
+
         SharedPreferences sp = getActivity().getSharedPreferences("login", MODE_PRIVATE);
         String token = sp.getString("logged", "missing");
 
@@ -96,6 +105,7 @@ public class MemberFragment extends Fragment {
                             String status = response.getString("status");
 
                             if (status.equals("success")) {
+                                progressDialog.dismiss();
                                 JSONArray data = response.getJSONArray("data");
 
                                 for (int i = 0; i < data.length(); i++) {
@@ -111,7 +121,10 @@ public class MemberFragment extends Fragment {
                                     listMember.add(member);
                                 }
 
-                                showMembers();
+                                memberAdapter.notifyDataSetChanged();
+                            } else {
+                                progressDialog.dismiss();
+                                Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -120,6 +133,8 @@ public class MemberFragment extends Fragment {
 
                     @Override
                     public void onError(ANError anError) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
                         Integer errorCode = anError.getErrorCode();
 
                         if (errorCode != 0) {

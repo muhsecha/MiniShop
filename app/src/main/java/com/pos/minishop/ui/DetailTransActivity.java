@@ -1,10 +1,12 @@
 package com.pos.minishop.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,6 +33,7 @@ public class DetailTransActivity extends AppCompatActivity {
     private TextView tvTime, tvDate, tvTrxNumber, tvTotalBuy;
     private String trxNumber;
     private Integer totalBuy = 0;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class DetailTransActivity extends AppCompatActivity {
         tvTrxNumber = findViewById(R.id.tv_trx_number);
         tvTotalBuy = findViewById(R.id.tv_total);
 
+        progressDialog = new ProgressDialog(this);
         Intent intent = getIntent();
         HistoryModel item = intent.getParcelableExtra("Item Data");
         trxNumber = item.getTrxNumber();
@@ -52,6 +56,7 @@ public class DetailTransActivity extends AppCompatActivity {
 
         rvHistory.setHasFixedSize(true);
         getHistory();
+        showHistory();
     }
 
     public void showHistory() {
@@ -61,6 +66,9 @@ public class DetailTransActivity extends AppCompatActivity {
     }
 
     public void getHistory() {
+        progressDialog.setTitle("Loading...");
+        progressDialog.show();
+
         SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
         String token = sp.getString("logged", "missing");
 
@@ -75,6 +83,7 @@ public class DetailTransActivity extends AppCompatActivity {
                             String status = response.getString("status");
 
                             if (status.equals("success")) {
+                                progressDialog.dismiss();
                                 JSONArray data = response.getJSONArray("data");
 
                                 for (int i = 0; i < data.length(); i++) {
@@ -103,6 +112,9 @@ public class DetailTransActivity extends AppCompatActivity {
 
                                 showHistory();
                                 tvTotalBuy.setText(String.valueOf(totalBuy));
+                            } else {
+                                progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -111,6 +123,8 @@ public class DetailTransActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(ANError anError) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                         Integer errorCode = anError.getErrorCode();
 
                         if (errorCode != 0) {

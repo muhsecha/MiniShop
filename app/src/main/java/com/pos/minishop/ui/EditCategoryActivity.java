@@ -1,5 +1,6 @@
 package com.pos.minishop.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import org.json.JSONObject;
 public class EditCategoryActivity extends AppCompatActivity {
     private EditText etName;
     private Button btnSubmit;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class EditCategoryActivity extends AppCompatActivity {
         etName = findViewById(R.id.et_name);
         btnSubmit = findViewById(R.id.btn_submit);
 
+        progressDialog = new ProgressDialog(this);
         Intent intent = getIntent();
         CategoryModel category = intent.getParcelableExtra("Item Data");
 
@@ -52,6 +55,9 @@ public class EditCategoryActivity extends AppCompatActivity {
                 }
 
                 if (!isEmpty) {
+                    progressDialog.setTitle("Loading...");
+                    progressDialog.show();
+
                     SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
                     String token = sp.getString("logged", "missing");
 
@@ -67,12 +73,16 @@ public class EditCategoryActivity extends AppCompatActivity {
                                         String status = response.getString("status");
 
                                         if (status.equals("success")) {
+                                            progressDialog.dismiss();
                                             String message = response.getString("message");
 
                                             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(getApplicationContext(), CategoryManagementActivity.class);
                                             startActivity(intent);
                                             finish();
+                                        } else {
+                                            progressDialog.dismiss();
+                                            Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -81,6 +91,7 @@ public class EditCategoryActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onError(ANError anError) {
+                                    progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                                     Integer errorCode = anError.getErrorCode();
 

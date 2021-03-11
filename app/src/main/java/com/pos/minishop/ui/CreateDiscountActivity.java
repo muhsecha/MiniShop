@@ -1,5 +1,6 @@
 package com.pos.minishop.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import org.json.JSONObject;
 public class CreateDiscountActivity extends AppCompatActivity {
     private EditText etName, etDiscount;
     private Button btnSubmit;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,8 @@ public class CreateDiscountActivity extends AppCompatActivity {
         etName = findViewById(R.id.et_name);
         etDiscount = findViewById(R.id.et_discount);
         btnSubmit = findViewById(R.id.btn_submit);
+
+        progressDialog = new ProgressDialog(this);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +57,9 @@ public class CreateDiscountActivity extends AppCompatActivity {
                 }
 
                 if (!isEmpty) {
+                    progressDialog.setTitle("Loading...");
+                    progressDialog.show();
+
                     SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
                     String token = sp.getString("logged", "missing");
 
@@ -70,10 +77,14 @@ public class CreateDiscountActivity extends AppCompatActivity {
                                         String message = response.getString("message");
 
                                         if (status.equals("success")) {
+                                            progressDialog.dismiss();
                                             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(getApplicationContext(), DiscountManagementActivity.class);
                                             startActivity(intent);
                                             finish();
+                                        } else {
+                                            progressDialog.dismiss();
+                                            Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -82,6 +93,7 @@ public class CreateDiscountActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onError(ANError anError) {
+                                    progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
                                     Integer errorCode = anError.getErrorCode();
 
