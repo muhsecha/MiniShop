@@ -29,18 +29,6 @@
         </RelativeLayout>
     </ScrollView>
 
-<<<<<<< HEAD
-        <Button
-            android:id="@+id/btn_add_discount"
-            android:background="@mipmap/add"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"/>
-
-=======
     <!--        <Button-->
     <!--            android:id="@+id/btn_add_discount"-->
     <!--            android:layout_below="@id/sv_list"-->
@@ -59,5 +47,4 @@
         android:layout_marginRight="25dp"
         android:layout_marginBottom="25dp"
         android:src="@drawable/ic_tambah" />
->>>>>>> add remove token if status code 401
 </RelativeLayout>
