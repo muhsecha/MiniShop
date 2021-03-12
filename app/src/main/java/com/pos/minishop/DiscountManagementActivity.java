@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class DiscountManagementActivity extends AppCompatActivity {
     private RecyclerView rvDiscount;
     private ArrayList<DiscountModel> listDiscount = new ArrayList<>();
-    private FloatingActionButton btnAddDiscount;
+    private Button btnAddDiscount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
