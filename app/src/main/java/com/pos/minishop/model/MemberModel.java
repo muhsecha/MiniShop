@@ -93,4 +93,9 @@ public class MemberModel implements Parcelable {
         dest.writeString(date);
         dest.writeString(memberCategoryId);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -92,7 +92,7 @@ public class ProductManagementActivity extends AppCompatActivity {
                                     product.setPrice(item.getString("price"));
                                     product.setStock(item.getString("stock"));
                                     product.setDesc(item.getString("desc"));
-                                    product.setImage(BaseUrl.url + "/storage/" + item.getString("image"));
+                                    product.setImage(item.getString("image"));
                                     listProduct.add(product);
                                 }
 

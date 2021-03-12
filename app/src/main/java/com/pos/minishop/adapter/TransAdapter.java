@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.pos.minishop.R;
+import com.pos.minishop.baseUrl.BaseUrl;
 import com.pos.minishop.model.TransModel;
 
 import java.util.ArrayList;
@@ -56,9 +57,9 @@ public class TransAdapter extends RecyclerView.Adapter<TransAdapter.TransViewHol
         holder.tvStock.setText(cart.getStock());
         holder.tvprice.setText(cart.getPrice());
 
-        if (cart.getCartImage() != null) {
+        if (!cart.getCartImage().equals("null")) {
             Glide.with(holder.itemView.getContext())
-                    .load(cart.getCartImage())
+                    .load(BaseUrl.url + "storage/" + cart.getCartImage())
                     .into(holder.ivCart);
         }
     }

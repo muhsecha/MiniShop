@@ -15,6 +15,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pos.minishop.adapter.DiscountAdapter;
 import com.pos.minishop.adapter.ProductAdapter;
 import com.pos.minishop.baseUrl.BaseUrl;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 public class DiscountManagementActivity extends AppCompatActivity {
     private RecyclerView rvDiscount;
     private ArrayList<DiscountModel> listDiscount = new ArrayList<>();
-    private Button btnAddDiscount;
+    private FloatingActionButton btnAddDiscount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

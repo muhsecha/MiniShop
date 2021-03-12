@@ -1,62 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="5dp">
 
     <RelativeLayout
-        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:padding="5dp">
+
         <ImageView
             android:id="@+id/iv_product_list"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/background_image_list"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/background_image_list"
+            android:src="@mipmap/img" />
+
         <TextView
             android:id="@+id/tv_nameProduct_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="makanan"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:textColor="@color/black"
             android:layout_toRightOf="@+id/iv_product_list"
-            />
+            android:text="makanan"
+            android:textColor="@color/black" />
+
         <TextView
             android:id="@+id/tv_codeProduct_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="harga : "
+            android:layout_below="@+id/tv_nameProduct_list"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="2dp"
-            android:layout_below="@+id/tv_nameProduct_list"
-            android:layout_toRightOf="@+id/iv_product_list"/>
+            android:layout_toRightOf="@+id/iv_product_list"
+            android:text="harga : "
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/tv_countProduct_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"
-            android:textColor="@color/white"
-            android:paddingHorizontal="5dp"
-            android:layout_marginTop="5dp"
             android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/background_count_list"/>
+            android:background="@drawable/background_count_list"
+            android:paddingHorizontal="5dp"
+            android:text="1"
+            android:textColor="@color/white" />
+
         <TextView
             android:id="@+id/tv_realPrice_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rp "
-            android:layout_marginRight="10dp"
+            android:layout_below="@+id/tv_countProduct_list"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/tv_countProduct_list"/>
+            android:layout_marginRight="10dp"
+            android:text="Rp " />
     </RelativeLayout>
 
 </RelativeLayout>
